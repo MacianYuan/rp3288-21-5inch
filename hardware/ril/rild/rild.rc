@@ -1,0 +1,5 @@
+service ril-daemon /vendor/bin/hw/rild
+    class main
+    user root
+    group radio vpn cache inet misc audio log readproc wakelock
+    capabilities BLOCK_SUSPEND NET_ADMIN NET_RAW

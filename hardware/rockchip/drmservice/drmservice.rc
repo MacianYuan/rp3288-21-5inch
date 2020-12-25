@@ -1,0 +1,3 @@
+service drmservice /vendor/bin/drmservice
+        class main
+        oneshot

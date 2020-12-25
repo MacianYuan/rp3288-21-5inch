@@ -1,0 +1,1 @@
+nv_by_chip=3 0x4335 2 nvram_ap6335.txt 0x4345 6 nvram_ap6255.txt 0x4345 9 nvram_ap6255.txt
