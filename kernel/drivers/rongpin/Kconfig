@@ -1,0 +1,28 @@
+
+menu "rongpin support"
+
+config POWER_EN
+	tristate "rongpin power_en support"
+
+config RP_GPIO_CTRL
+	tristate "rp gpio control driver"
+	default n
+	help
+	  Say yes here to build support for "rp_gpio_ctrl.c".
+	  
+config LED_GPIO
+	tristate "led gpio support"
+	default y
+	help
+		Generic rpdzkj power off
+config RP_CONFIG
+	tristate "rpdzkj config"
+	default y
+	help
+		rpdzkj config
+config RP_GPIO
+        tristate "rp gpio driver"
+        default y
+        help
+          Say yes here to build support for "rp_gpio.c".
+endmenu

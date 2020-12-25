@@ -1,0 +1,325 @@
+#include "rk3288-act8846.dtsi"
+#include "alc5640.dtsi"
+
+
+#include "rp-lcd-mipi-5-720-1280.dtsi"
+
+
+/ {
+	
+	fiq-debugger {
+		compatible = "rockchip,fiq-debugger";
+		interrupts = <GIC_SPI 155 IRQ_TYPE_LEVEL_HIGH>;
+		rockchip,serial-id = <2>;
+		rockchip,wake-irq = <0>;
+		rockchip,irq-mode-enable = <0>;  /* If enable uart uses irq instead of fiq */
+		rockchip,baudrate = <115200>;  /* Only 115200 and 1500000 */
+		pinctrl-names = "default";
+		pinctrl-0 = <&uart2_xfer>;
+	};
+
+        33v_power_en {
+                compatible = "33v_en";
+                33ven_pin =  <&gpio6 6  1>;
+                5ven_pin =   <&gpio6 5  1>;
+		//5ven_pin_2 =<&gpio6 7 1>;
+                fan_pin =    <&gpio7 21 1>;
+		hub_rst =    <&gpio5 13 1>;
+		rp_not_deep_leep = <0>;
+                status = "okay";
+        };
+
+        led_gpio{
+                compatible = "led_gpio";
+                status = "okay";
+                led_gpio =<&gpio4 27 0>;
+        };
+
+	rp_gpio{
+		status = "okay";
+		compatible = "rp_gpio";
+		gpio5c0 {
+			gpio_num = <&gpio5 16 GPIO_ACTIVE_LOW>;
+			gpio_function = <0>;
+			gpio_event = <KEY_F14>;
+		        send_mode = <0>;  
+		};
+		gpio7a4 {
+			gpio_num = <&gpio7 4 GPIO_ACTIVE_LOW>;
+			gpio_function = <0>;	
+		};
+		gpio5c1 {
+			gpio_num = <&gpio5 17 GPIO_ACTIVE_LOW>;
+			gpio_function = <0>;	
+		};
+		gpio5b3 {
+			gpio_num = <&gpio5 11 GPIO_ACTIVE_LOW>;
+			gpio_function = <0>;	
+		};
+		gpio5b2 {
+			gpio_num = <&gpio5 10 GPIO_ACTIVE_LOW>;
+			gpio_function = <0>;	
+		};
+		gpio5b4 {
+			gpio_num = <&gpio5 12 GPIO_ACTIVE_LOW>;
+			gpio_function = <0>;	
+		};
+    		gpio8a3 {
+			gpio_num = <&gpio8 3 GPIO_ACTIVE_LOW>;
+			gpio_function = <0>;	
+		};
+		gpio6b3 {
+			gpio_num = <&gpio6 11 GPIO_ACTIVE_LOW>;
+			gpio_function = <0>;	
+		};
+		gpio0b3{
+			gpio_num = <&gpio0 11 GPIO_ACTIVE_LOW>;
+			gpio_function = <0>;	
+		};
+	};
+	rk_key: rockchip-key {
+		compatible = "rockchip,key";
+		status = "okay";
+
+		io-channels = <&saradc 1>;
+
+		vol-up-key {
+			linux,code = <115>;
+			label = "volume up";
+			rockchip,adc_value = <1>;
+		};
+
+		vol-down-key {
+			linux,code = <114>;
+			label = "volume down";
+			rockchip,adc_value = <170>;
+		};
+
+		power-key {
+			gpios = <&gpio0 5 GPIO_ACTIVE_LOW>;
+			linux,code = <116>;
+			pinctrl-names = "default";
+			pinctrl-0 = <&pwrbtn>;
+			label = "power";
+			gpio-key,wakeup;
+		};
+
+		menu-key {
+			linux,code = <59>;
+			label = "menu";
+			rockchip,adc_value = <355>;
+		};
+
+		home-key {
+			linux,code = <102>;
+			label = "home";
+			rockchip,adc_value = <746>;
+		};
+
+		back-key {
+			linux,code = <158>;
+			label = "back";
+			rockchip,adc_value = <560>;
+		};
+
+		camera-key {
+			linux,code = <212>;
+			label = "camera";
+			rockchip,adc_value = <450>;
+		};
+	};
+
+
+
+
+
+
+
+	spdif-sound {
+                status = "okay";
+                compatible = "simple-audio-card";
+		simple-audio-card,format = "spdif";
+		simple-audio-card,mclk-fs = <512>;
+                simple-audio-card,name = "hdmi,spdif";
+		simple-audio-card,cpu {
+				sound-dai = <&spdif>;
+		};
+		simple-audio-card,codec {
+				sound-dai = <&hdmi>;
+		};
+        };
+
+	spdif_out: spdif-out {
+                status = "okay";
+		compatible = "linux,spdif-dit";
+		#sound-dai-cells = <0>;
+	};
+
+};
+
+&i2c0 {
+	status = "okay";
+        hym8563: hym8563@51 {
+                compatible = "haoyu,hym8563";
+                reg = <0x51>;
+
+                interrupt-parent = <&gpio0>;
+                interrupts = <4 IRQ_TYPE_EDGE_FALLING>;
+
+                pinctrl-names = "default";
+                pinctrl-0 = <&rtc8563_int>;
+
+                #clock-cells = <0>;
+                clock-output-names = "xin32k";
+        };
+
+};
+
+&i2c1 {
+	status = "okay";
+
+	bma223: bma223@18{
+		status = "okay";
+		compatible = "gs_bma223";
+		reg = <0x18>;
+		type = <2>;
+		irq-gpio = <&gpio8 0 IRQ_TYPE_EDGE_RISING>;
+		irq_enable = <0>;
+		poll_delay_ms = <200>;
+		layout = <8>;
+	};
+
+};
+
+
+&i2c2 {
+	status = "okay";
+	max17047@36 {
+		status = "okay";
+                compatible = "maxim,max17047";
+                reg = <0x36>;
+                charge-detect-gpio = <&gpio7 12 GPIO_ACTIVE_HIGH>;
+                battery-full-detect-gpio = <&gpio7 13 GPIO_ACTIVE_HIGH>;
+         };
+
+	
+
+
+
+	bma223_core: bma223_core@18{
+		status = "okay";
+		compatible = "gs_bma223_core";
+		reg = <0x18>;
+		type = <2>;
+		irq-gpio = <&gpio8 0 IRQ_TYPE_EDGE_RISING>;
+		irq_enable = <0>;
+		poll_delay_ms = <200>;
+		layout = <8>;
+	};
+};
+
+&spdif {
+	#sound-dai-cells = <0>;
+	status = "okay";
+};
+&i2s {
+	#sound-dai-cells = <0>;
+	status = "okay";
+};
+
+
+&saradc {
+	vref-supply = <&vcc_18>;
+	status = "okay";
+};
+
+&spi1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&spi1_clk>, <&spi1_cs0>, <&spi1_tx>, <&spi1_rx>;
+	status = "okay";
+};
+
+&spi2 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&spi2_clk>, <&spi2_cs0>, <&spi2_tx>, <&spi2_rx>;
+	status = "disabled";
+};
+
+&tsadc {
+	rockchip,hw-tshut-mode = <0>;
+	rockchip,hw-tshut-polarity = <0>;
+	rockchip,hw-tshut-temp = <850000>;
+	status = "okay";
+};
+
+
+&uart0 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart0_xfer>, <&uart0_cts>;
+	status = "okay";
+};
+
+&uart1 {
+	status = "okay";
+};
+
+&uart2 {
+	status = "okay";
+};
+
+&uart3 {
+	status = "okay";
+};
+
+&uart4 {
+	status = "okay";
+};
+
+&wdt {
+	status = "okay";
+};
+
+
+&pinctrl {
+
+	rtc8563 {
+                rtc8563_int: rtc8563-int {
+                        rockchip,pins = <RK_GPIO0 4 RK_FUNC_GPIO &pcfg_pull_up>;
+                };
+	};
+	buttons {
+		pwrbtn: pwrbtn {
+			rockchip,pins = <0 5 RK_FUNC_GPIO &pcfg_pull_up>;
+		};
+	};
+};
+
+
+&pwm1 {
+        compatible = "rockchip,remotectl-pwm";
+        interrupts = <GIC_SPI 78 IRQ_TYPE_LEVEL_HIGH>;
+        remote_pwm_id = <1>;
+        handle_cpu_id = <2>;
+        status = "disabled";
+        //status = "okay";
+
+    ir_key0{
+        rockchip,usercode = <0x9f00>;
+        rockchip,key_table =
+            <0xa8   KEY_POWER>,
+            <0xe9   KEY_MENU>,
+            <0xb0   KEY_BACK>,
+            <0xb8   KEY_HOME>,
+            <0x75   KEY_SYSRQ>,
+            <0x00   KEY_VOLUMEUP>,
+            <0xa2   KEY_VOLUMEDOWN>,
+            <0xfd   KEY_ENTER>,
+            <0xbc   KEY_UP>,
+            <0xf5   KEY_DOWN>,
+            <0xf9   KEY_LEFT>,
+            <0xf1   KEY_RIGHT>;
+            //<0x75   KEY_RIGHTALT>,
+            //<0x75   KEY_TAB>,
+    };
+};
+

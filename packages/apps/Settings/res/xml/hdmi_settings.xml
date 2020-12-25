@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:entries="@array/hdmi_rotation_entries"
+        android:entryValues="@array/hdmi_rotation_values"
+        android:key="system_rotation"
+        android:title="@string/system_rotation" />
+
+    <PreferenceCategory
+        android:key="main_category"
+        android:title="@string/screen_title">
+
+        <SwitchPreference
+            android:key="main_switch"
+            android:persistent="true"
+            android:title="@string/screen_switch" />
+
+        <ListPreference
+            android:defaultValue="2"
+            android:entries="@array/hdmi_resolution_entries"
+            android:entryValues="@array/hdmi_resolution_values"
+            android:key="main_resolution"
+            android:persistent="true"
+            android:title="@string/screen_resolution" />
+
+        <Preference
+            android:key="main_screen_scale"
+            android:title="@string/screen_scale" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="aux_category"
+        android:title="@string/screen_title">
+
+        <SwitchPreference
+            android:key="aux_switch"
+            android:persistent="true"
+            android:title="@string/screen_switch" />
+
+        <ListPreference
+            android:defaultValue="2"
+            android:entries="@array/hdmi_resolution_entries"
+            android:entryValues="@array/hdmi_resolution_values"
+            android:key="aux_resolution"
+            android:persistent="true"
+            android:title="@string/screen_resolution" />
+
+        <Preference
+            android:key="aux_screen_scale"
+            android:title="@string/screen_scale" />
+
+        <CheckBoxPreference
+            android:key="aux_screen_vh"
+            android:title="@string/screen_full_vh" />
+
+        <ListPreference
+            android:entries="@array/dual_screen_ver_hor_entries"
+            android:entryValues="@array/dual_screen_ver_hor_values"
+            android:key="aux_screen_vhlist"
+            android:title="@string/screen_rotation" />
+    </PreferenceCategory>
+
+
+</PreferenceScreen>

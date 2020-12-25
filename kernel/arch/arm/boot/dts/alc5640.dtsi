@@ -1,0 +1,69 @@
+
+/ {
+        rt5640-sound {
+                compatible = "simple-audio-card";
+                simple-audio-card,format = "i2s";
+                //simple-audio-card,name = "realtek,rt5640-codec";
+                simple-audio-card,name = "rockchip,rt5640-codec";
+                simple-audio-card,mclk-fs = <512>;
+                simple-audio-card,widgets =
+                        "Microphone", "Mic Jack",
+                        "Headphone", "Headphone Jack",
+                        "Speaker", "Speaker";
+                simple-audio-card,routing =
+                        "Mic Jack", "MICBIAS1",
+                        "IN1P", "Mic Jack",
+                        "Headphone Jack", "HPOL",
+                        "Headphone Jack", "HPOR",
+                        "Speaker", "SPOLP",
+                        "Speaker", "SPOLN",
+                        "Speaker", "SPORP",
+                        "Speaker", "SPORN";
+                pinctrl-names = "default";
+                pinctrl-0 = <&rt5640_hp_det_gpio>;
+                simple-audio-card,hp-det-gpio = <&gpio5 19 GPIO_ACTIVE_HIGH>;
+                simple-audio-card,cpu {
+                        sound-dai = <&i2s>;
+                };
+                simple-audio-card,codec {
+                        sound-dai = <&rt5640>;
+                };
+        };
+};
+
+
+&i2c2 {
+        status = "okay";
+        i2c-scl-rising-time-ns = <900>;
+        i2c-scl-falling-time-ns = <10>;
+
+
+        rt5640: rt5640@1c {
+                status = "okay";
+                compatible = "realtek,rt5640";
+                reg = <0x1c>;
+                clock-names = "mclk";
+                clocks = <&cru SCLK_I2S0_OUT>;
+                realtek,in1-differential;
+                pinctrl-names = "default";
+                pinctrl-0 = <&i2s_8ch_mclk>;
+                io-channels = <&saradc 4>;
+                hp-det-adc-value = <500>;
+                #sound-dai-cells = <0>;
+                play-volume = <175>;       //0-175
+                capture-volume = <127>; //0-127
+        };
+};
+
+&i2s {
+        #sound-dai-cells = <0>;
+        status = "okay";
+};
+
+&pinctrl {
+        rt5640 {
+                rt5640_hp_det_gpio: rt5640_hp_det_gpio {
+                        rockchip,pins = <5 19 RK_FUNC_GPIO &pcfg_pull_up>;
+                };
+        };
+};

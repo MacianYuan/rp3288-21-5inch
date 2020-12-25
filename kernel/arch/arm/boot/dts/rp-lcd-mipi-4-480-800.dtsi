@@ -1,0 +1,386 @@
+
+
+/ {
+
+	display-subsystem {
+		status = "okay";
+
+		ports = <&vopb_out>, <&vopl_out>;
+		logo-memory-region = <&drm_logo>;
+
+		route {
+			route_edp: route-edp {
+				status = "disabled";
+				logo,uboot = "logo.bmp";
+				logo,kernel = "logo.bmp";
+				logo,mode = "center";
+				charge_logo,mode = "center";
+				connect = <&vopb_out_edp>;
+			};
+
+			route_dsi0: route-dsi0 {
+				status = "disabled";
+				logo,uboot = "logo.bmp";
+				logo,kernel = "logo.bmp";
+				logo,mode = "center";
+				charge_logo,mode = "center";
+				connect = <&vopb_out_dsi0>;
+			};
+
+			route_lvds: route-lvds {
+				status = "disabled";
+				logo,uboot = "logo.bmp";
+				logo,kernel = "logo.bmp";
+				logo,mode = "center";
+				charge_logo,mode = "center";
+				connect = <&vopb_out_lvds>;
+			};
+
+			route_hdmi: route-hdmi {
+				status = "disabled";
+				logo,uboot = "logo.bmp";
+				logo,kernel = "logo.bmp";
+				logo,mode = "center";
+				charge_logo,mode = "center";
+				connect = <&vopl_out_hdmi>;
+			};
+		};
+	};
+	
+	backlight: backlight {
+		status = "okay";
+		compatible = "pwm-backlight";
+		pwms = <&pwm0 0 25000 0>;
+		brightness-levels = <
+			  0   1   2   3   4   5   6   7
+			  8   9  10  11  12  13  14  15
+			 16  17  18  19  20  21  22  23
+			 24  25  26  27  28  29  30  31
+			 32  33  34  35  36  37  38  39
+			 40  41  42  43  44  45  46  47
+			 48  49  50  51  52  53  54  55
+			 56  57  58  59  60  61  62  63
+			 64  65  66  67  68  69  70  71
+			 72  73  74  75  76  77  78  79
+			 80  81  82  83  84  85  86  87
+			 88  89  90  91  92  93  94  95
+			 96  97  98  99 100 101 102 103
+			104 105 106 107 108 109 110 111
+			112 113 114 115 116 117 118 119
+			120 121 122 123 124 125 126 127
+			128 129 130 131 132 133 134 135
+			136 137 138 139 140 141 142 143
+			144 145 146 147 148 149 150 151
+			152 153 154 155 156 157 158 159
+			160 161 162 163 164 165 166 167
+			168 169 170 171 172 173 174 175
+			176 177 178 179 180 181 182 183
+			184 185 186 187 188 189 190 191
+			192 193 194 195 196 197 198 199
+			200 201 202 203 204 205 206 207
+			208 209 210 211 212 213 214 215
+			216 217 218 219 220 221 222 223
+			224 225 226 227 228 229 230 231
+			232 233 234 235 236 237 238 239
+			240 241 242 243 244 245 246 247
+			248 249 250 251 252 253 254 255>;
+		default-brightness-level = <255>;
+	};
+        //bill
+        rpdzkj_config {
+                compatible = "rp_config";
+                user_version = "rpdzkj";
+                system_rotate = "0";
+                back_camera_rotate = "0";
+                front_camera_rotate = "0";
+                lcd_density = "160";
+                language = "zh-CN";   //zh-CN //en-US
+                time_zone = "Asia/Shanghai"; //Asia/Shanghai = +8   //Europe/London  = +1	//Africa/Casablanca	= +0;
+                not_navigation_bar = "false";
+                not_status_bar = "false";
+                default_launcher = "true";
+                has_root = "true";
+                usb_not_permission = "true";  
+                usb_camera_only_front = "false";
+                gps_use = "false";
+                gps_serial_port = "/dev/ttyS4";
+				primary_device = "DSI";
+				extend_device = "HDMI-A";
+				extend_rotate = "0";
+		rotation_efull = "true";
+		home_apk = "null";
+                status = "okay";
+        };
+	
+};
+&pwm0 {
+        status = "okay";
+};
+&dsi0 {
+        status = "okay";
+        rockchip,lane-rate = <480>;
+
+        panel: panel {
+                compatible = "simple-panel-dsi";
+                reg = <0>;
+                backlight = <&backlight>;
+		cmd_later_reset = <0>;
+                enable-gpios = <&gpio7 2 GPIO_ACTIVE_HIGH>;
+                reset-gpios = <&gpio7 3 GPIO_ACTIVE_HIGH>;
+		//power-supply = <&vcc_lcd>;
+                dsi,flags = <(MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST |
+                                MIPI_DSI_MODE_LPM | MIPI_DSI_MODE_EOT_PACKET)>;
+                dsi,format = <MIPI_DSI_FMT_RGB888>;
+                dsi,lanes = <2>;
+                reset-delay-ms = <20>;
+                init-delay-ms = <20>;
+                enable-delay-ms = <120>;
+                prepare-delay-ms = <120>;
+                status = "okay";
+		panel-init-sequence = [
+			39 00 06 FF FF 98 06 04 01
+			39 00 02 08 10                 
+			39 00 02 21 01
+			39 00 02 30 02                 
+			39 00 02 31 00
+			39 00 02 40 10               
+			39 00 02 41 55 
+			39 00 02 42 02 
+			39 00 02 43 09 
+			39 00 02 44 07 
+			39 00 02 50 78 
+			39 00 02 51 78 
+			39 00 02 52 00 
+			39 00 02 53 77 
+			39 00 02 60 07 
+			39 00 02 61 00 
+			39 00 02 62 08 
+			39 00 02 63 00 
+			39 00 02 A0 00 
+			39 00 02 A1 03 
+			39 00 02 A2 08 
+			39 00 02 A3 0F 
+			39 00 02 A4 07 
+			39 00 02 A5 0B 
+			39 00 02 A6 07 
+			39 00 02 A7 06 
+			39 00 02 A8 07 
+			39 00 02 A9 0C 
+			39 00 02 AA 0E 
+			39 00 02 AB 05 
+			39 00 02 AC 0C 
+			39 00 02 AD 21 
+			39 00 02 AE 1C 
+			39 00 02 C0 00 
+			39 00 02 C1 04 
+			39 00 02 C2 09 
+			39 00 02 C3 0E 
+			39 00 02 C4 06 
+			39 00 02 C5 0B 
+			39 00 02 C6 07 
+			39 00 02 C7 05 
+			39 00 02 C8 08 
+			39 00 02 C9 0C 
+			39 00 02 CA 0F 
+			39 00 02 CB 06 
+			39 00 02 CC 0C 
+			39 00 02 CD 20 
+			39 00 02 CE 1C 
+			39 00 02 CF 00   
+			39 00 06 FF FF 98 06 04 06
+			39 00 02 00 21
+			39 00 02 01 09
+			39 00 02 02 00    
+			39 00 02 03 00
+			39 00 02 04 01
+			39 00 02 05 01
+			39 00 02 06 80    
+			39 00 02 07 05  
+			39 00 02 08 02
+			39 00 02 09 80    
+			39 00 02 0A 00    
+			39 00 02 0B 00    
+			39 00 02 0C 0A
+			39 00 02 0D 0A
+			39 00 02 0E 00
+			39 00 02 0F 00
+			39 00 02 10 E0  
+			39 00 02 11 E4  
+			39 00 02 12 04
+			39 00 02 13 00
+			39 00 02 14 00
+			39 00 02 15 C0
+			39 00 02 16 08
+			39 00 02 17 00
+			39 00 02 18 00
+			39 00 02 19 00
+			39 00 02 1A 00
+			39 00 02 1B 00
+			39 00 02 1C 00
+			39 00 02 1D 00
+			39 00 02 20 01
+			39 00 02 21 23
+			39 00 02 22 45
+			39 00 02 23 67
+			39 00 02 24 01
+			39 00 02 25 23
+			39 00 02 26 45
+			39 00 02 27 67
+			39 00 02 30 01
+			39 00 02 31 11	
+			39 00 02 32 00	
+			39 00 02 33 EE	
+			39 00 02 34 FF	
+			39 00 02 35 CB	
+			39 00 02 36 DA	
+			39 00 02 37 AD	
+			39 00 02 38 BC	
+			39 00 02 39 76	
+			39 00 02 3A 67	
+			39 00 02 3B 22	
+			39 00 02 3C 22	
+			39 00 02 3D 22	
+			39 00 02 3E 22	
+			39 00 02 3F 22
+			39 00 02 40 22
+			39 00 02 52 10
+			39 00 02 53 10
+			39 00 02 54 13
+			39 00 06 FF FF 98 06 04 07 
+			39 00 02 B3 10
+			39 00 02 17 22
+			39 00 02 02 77
+			39 00 02 26 B2
+			39 00 02 E1 79
+			39 00 06 FF FF 98 06 04 00
+			39 00 02 35 00
+			05 78 01 11
+			05 78 01 29
+			39 00 06 FF FF 98 06 04 00
+                ];
+		panel-exit-sequence = [
+			05 00 01 28
+			05 78 01 10
+		];
+        
+
+                disp_timings: display-timings {
+                        native-mode = <&timing0>;
+
+                        timing0: timing0 {
+                                clock-frequency = <31000000>;
+                                hactive = <480>;
+                                vactive = <800>;
+                                hback-porch = <30>;	
+                                hfront-porch = <32>;
+                                vback-porch = <12>;
+                                vfront-porch = <16>;
+                                hsync-len = <10>;
+                                vsync-len = <5>;
+                                hsync-active = <0>;
+                                vsync-active = <0>;
+                                de-active = <0>;
+                                pixelclk-active = <0>;
+                        };
+                };
+        };
+};
+
+&route_dsi0 {
+        status = "okay";
+};
+&edp_in_vopl {
+        status = "disabled";
+};
+&dsi0_in_vopl {
+        status = "disabled";
+};
+&dsi1_in_vopl {
+        status = "disabled";
+};
+&lvds_in_vopl {
+        status = "disabled";
+};
+
+&edp_in_vopb {
+        status = "disabled";
+};
+&dsi0_in_vopb {
+        status = "okay";
+};
+&dsi1_in_vopb {
+        status = "disabled";
+};
+&lvds_in_vopb {
+        status = "disabled";
+};
+
+&vopb {
+	status = "okay";
+};
+
+&vopb_mmu {
+	status = "okay";
+};
+
+&vopl {
+	status = "okay";
+};
+
+&vopl_mmu {
+	status = "okay";
+};
+
+&hdmi {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	#sound-dai-cells = <0>;
+	status = "okay";
+};
+
+&hdmi_in_vopl {
+        status = "okay";
+};
+&hdmi_in_vopb {
+        status = "disabled";
+};
+
+//TP
+&i2c4 {
+        status = "okay";
+        goodix_ts@5d {
+                compatible = "goodix,gt9xx";
+                reg = <0x5d>;
+		gtp_resolution_x = <480>;
+		gtp_resolution_y = <800>;
+		gtp_int_tarigger = <1>;
+		gtp_change_x2y = <1>;
+		gtp_overturn_x = <1>;
+		gtp_overturn_y = <0>;
+		gtp_send_cfg = <1>;
+		gtp_touch_wakeup = <1>;
+                goodix_rst_gpio = <&gpio7 5 GPIO_ACTIVE_HIGH>;
+                goodix_irq_gpio = <&gpio7 6 IRQ_TYPE_EDGE_FALLING>;
+
+	        goodix,cfg-group0 = [
+			
+                	60 20 03 E0 01 05 3D 00 01 08 28 0F
+			5A 32 03 05 00 00 00 00 00 00 00 17
+			19 1C 14 87 27 08 35 37 B5 06 00 00
+			01 21 03 1C 00 01 00 00 00 03 64 32
+			00 00 00 23 50 94 D5 02 07 00 00 04
+			AE 26 00 94 2D 00 80 35 00 6E 3E 00
+			5F 49 00 5F 00 00 00 00 00 00 00 00
+			00 00 00 00 00 00 00 00 00 00 00 00
+			00 00 00 00 00 00 00 00 00 00 00 00
+			00 00 00 00 02 04 06 08 0A 0C 0E 10
+			FF FF FF FF FF FF FF FF FF FF FF FF
+			FF FF FF FF FF FF FF FF FF FF 24 22
+			21 20 1F 1E 1D 00 02 04 06 08 0A 0C
+			FF FF FF FF FF FF FF FF FF FF FF FF
+			FF FF FF FF FF FF FF FF FF FF FF FF
+			FF FF FF FF 67 01];	
+                
+        };
+};
+
