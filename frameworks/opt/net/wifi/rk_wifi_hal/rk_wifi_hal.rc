@@ -1,0 +1,5 @@
+service rk_wifi_hal /vendor/bin/hw/rk_wifi_hal
+    class hal
+    user root
+    group wifi
+    oneshot
