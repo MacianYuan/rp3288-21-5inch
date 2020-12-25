@@ -1,0 +1,41 @@
+Revision history for SPIRV-Tools
+
+v2016.2-dev 2016-07-19
+ - Start v2016.2
+
+v2016.1 2016-07-19
+ - Fix https://github.com/KhronosGroup/SPIRV-Tools/issues/261
+   Turn off ClipDistance and CullDistance capability checks for Vulkan.
+ - The disassembler can emit friendly names based on debug info (OpName
+   instructions), and will infer somewhat friendly names for most types.
+   This is turned on by default for the spirv-dis command line tool.
+ - Updated to support SPIR-V 1.1 rev 2
+   - Input StorageClass, Sampled1D capability, and SampledBuffer capability
+     do not require Shader capability anymore.
+
+v2016.0 2016-07-04
+
+ - Adds v<year>.<index> versioning, with "-dev" indicating
+   work in progress.  The intent is to more easly report
+   and summarize functionality when SPIRV-Tools is incorporated
+   in downstream projects.
+
+ - Summary of functionality (See the README.md for more):
+   - Supports SPIR-V 1.1 Rev 1
+   - Supports SPIR-V 1.0 Rev 5
+   - Supports GLSL std450 extended instructions 1.0 Rev 3
+   - Supports OpenCL extended instructions 1.0 Rev 2
+   - Assembler, disassembler are complete
+     - Supports floating point widths of 16, 32, 64 bits
+     - Supports integer widths up to 64 bits
+   - Validator is incomplete
+     - Checks capability requirements in most cases
+     - Checks module layout constraints
+     - Checks ID use-definition ordering constraints,
+       ignoring control flow
+     - Checks some control flow graph rules
+   - Optimizer is introduced, with few available transforms.
+   - Supported on Linux, OSX, Android, Windows
+
+ - Fixes bugs:
+   - #143: OpenCL pow and pown arguments

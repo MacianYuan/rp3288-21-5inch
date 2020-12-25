@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<manifest>
+  <remote fetch=".." name="goog" review="sso://googleplex-android/" />
+  <default remote="goog" revision="mirror-aosp-studio-master-dev" sync-j="4" />
+  <project name="platform/external/jetbrains/jdk8u" path="external/jetbrains/jdk8u" revision="f626a6b4854cea8b260ee443c43f6d1bdad2e4f0" upstream="mirror-aosp-studio-master-dev" />
+  <project name="platform/external/jetbrains/jdk8u_corba" path="external/jetbrains/jdk8u_corba" revision="c55762da91519a85fb2fd0b4f415735a12cc4888" upstream="mirror-aosp-studio-master-dev" />
+  <project name="platform/external/jetbrains/jdk8u_hotspot" path="external/jetbrains/jdk8u_hotspot" revision="eeefff50de27aca421ceb152cb0f85115a11f5f4" upstream="mirror-aosp-studio-master-dev" />
+  <project name="platform/external/jetbrains/jdk8u_jaxp" path="external/jetbrains/jdk8u_jaxp" revision="ad06f386190d159fe7bc8202b3abae2f1b218ecd" upstream="mirror-aosp-studio-master-dev" />
+  <project name="platform/external/jetbrains/jdk8u_jaxws" path="external/jetbrains/jdk8u_jaxws" revision="1608370faaf8ca1655f5442d66d2cfd6282747c7" upstream="mirror-aosp-studio-master-dev" />
+  <project name="platform/external/jetbrains/jdk8u_jdk" path="external/jetbrains/jdk8u_jdk" revision="3a39c0e82605296e87f81852e4e7ae9c528cede9" upstream="mirror-aosp-studio-master-dev" />
+  <project name="platform/external/jetbrains/jdk8u_langtools" path="external/jetbrains/jdk8u_langtools" revision="01d8e643b65864b0078c06e0791ea36d2aa7b4b2" upstream="mirror-aosp-studio-master-dev" />
+  <project name="platform/external/jetbrains/jdk8u_nashorn" path="external/jetbrains/jdk8u_nashorn" revision="45faba88ae10e979db10142c68d02d986018010a" upstream="mirror-aosp-studio-master-dev" />
+  <!-- prebuilts projects -->
+  <project clone-depth="1" name="platform/prebuilts/build-tools" path="prebuilts/build-tools" revision="f537089a258a89539154e8f3932f4c8bd1bdde30" upstream="mirror-aosp-master" />
+  <project clone-depth="1" name="platform/prebuilts/clang/host/darwin-x86" path="prebuilts/clang/host/darwin-x86" revision="c052e7853ea000b972d163d1774a44516b8814a6" upstream="mirror-aosp-master" />
+  <project clone-depth="1" name="platform/prebuilts/clang/host/linux-x86" path="prebuilts/clang/host/linux-x86" revision="2793bf6498f29c6208ed656a9262ad1d6e48c97a" upstream="mirror-aosp-master" />
+  <project clone-depth="1" name="platform/prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.15-4.8" path="prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.15-4.8" revision="9ee4f51e97bc4bc8f51b06912767018be4d65853" upstream="mirror-aosp-master" />
+  <project clone-depth="1" name="platform/prebuilts/studio/jdk" path="prebuilts/studio/jdk" revision="bfcd4e9c5eb808f9e631dd388f90c32bc3c3458b" upstream="mirror-aosp-studio-master-dev" />
+  <!-- build projects -->
+  <project clone-depth="1" name="toolchain/jdk/build" path="toolchain/jdk/build" revision="c6e54ff41d58d8a5430c35f7fdadde67f3b2616f" upstream="mirror-aosp-master" />
+  <project clone-depth="1" name="toolchain/jdk/deps" path="toolchain/jdk/deps" revision="76d7e49d62136f36810507a366504379174cc6b2" upstream="master" />
+</manifest>
