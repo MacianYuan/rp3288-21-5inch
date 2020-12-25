@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="circular_progress_layout_color_scheme_colors">
+        <item>@color/circular_progress_layout_red</item>
+        <item>@color/circular_progress_layout_yellow</item>
+        <item>@color/circular_progress_layout_green</item>
+        <item>@color/circular_progress_layout_blue</item>
+    </array>
+    <color name="circular_progress_layout_background_color">#00000000</color>
+    <color name="circular_progress_layout_blue">#FF2196F3</color>
+    <color name="circular_progress_layout_green">#FF4CAF50</color>
+    <color name="circular_progress_layout_red">#FFF44336</color>
+    <color name="circular_progress_layout_yellow">#FFFFEB3B</color>
+    <declare-styleable name="BoxInsetLayout_Layout"><attr name="boxedEdges">
+            
+            <flag name="none" value="0x00"/>
+            
+            <flag name="left" value="0x01"/>
+            
+            <flag name="top" value="0x02"/>
+            
+            <flag name="right" value="0x04"/>
+            
+            <flag name="bottom" value="0x08"/>
+            
+            <flag name="all" value="0x0F"/>
+        </attr></declare-styleable>
+    <declare-styleable name="CircledImageView"><attr name="android:src"/><attr format="color" name="background_color"/><attr format="dimension" name="background_radius"/><attr format="dimension" name="background_radius_pressed"/><attr format="dimension" name="background_border_width"/><attr format="color" name="background_border_color"/><attr format="enum" name="background_border_cap">
+            <enum name="butt" value="0"/>
+            <enum name="round" value="1"/>
+            <enum name="square" value="2"/>
+        </attr><attr format="dimension" name="img_padding"/><attr format="dimension" name="background_shadow_width"/><attr format="dimension" name="img_circle_percentage"/><attr format="dimension" name="img_horizontal_offset_percentage"/><attr format="color" name="img_tint"/><attr format="fraction" name="background_radius_percent"/><attr format="fraction" name="background_radius_pressed_percent"/><attr format="enum" name="clip_dimen">
+            <enum name="none" value="0"/>
+            <enum name="height" value="1"/>
+            <enum name="width" value="2"/>
+        </attr></declare-styleable>
+    <declare-styleable name="CircularProgressLayout"><attr format="color" name="backgroundColor"/><attr format="dimension" name="strokeWidth"/><attr format="reference|color" name="colorSchemeColors"/><attr format="boolean" name="indeterminate"/></declare-styleable>
+    <declare-styleable name="PageIndicatorView"><attr format="dimension" name="wsPageIndicatorDotSpacing"/><attr format="dimension" name="wsPageIndicatorDotRadius"/><attr format="dimension" name="wsPageIndicatorDotRadiusSelected"/><attr format="color" name="wsPageIndicatorDotColor"/><attr format="color" name="wsPageIndicatorDotColorSelected"/><attr format="boolean" name="wsPageIndicatorDotFadeWhenIdle"/><attr format="integer" name="wsPageIndicatorDotFadeOutDelay"/><attr format="integer" name="wsPageIndicatorDotFadeOutDuration"/><attr format="integer" name="wsPageIndicatorDotFadeInDuration"/><attr format="color" name="wsPageIndicatorDotShadowColor"/><attr format="dimension" name="wsPageIndicatorDotShadowRadius"/><attr format="dimension" name="wsPageIndicatorDotShadowDx"/><attr format="dimension" name="wsPageIndicatorDotShadowDy"/></declare-styleable>
+    <declare-styleable name="WearableActionDrawerView"><attr format="string" name="drawerTitle"/><attr format="reference" name="actionMenu"/><attr format="boolean" name="showOverflowInPeek"/></declare-styleable>
+    <declare-styleable name="WearableDrawerView"><attr format="reference" name="peekView"/><attr format="reference" name="drawerContent"/><attr format="boolean" name="enableAutoPeek"/><attr name="android:background"/><attr name="android:elevation"/></declare-styleable>
+    <declare-styleable name="WearableNavigationDrawerView"><attr format="enum" name="navigationStyle">
+            
+            <enum name="singlePage" value="0"/>
+            
+            <enum name="multiPage" value="1"/>
+        </attr></declare-styleable>
+    <declare-styleable name="WearableRecyclerView"><attr format="fraction" name="bezelWidth"/><attr format="boolean" name="circularScrollingGestureEnabled"/><attr format="float" name="scrollDegreesPerScreen"/></declare-styleable>
+    <dimen name="circular_progress_layout_stroke_width">4dp</dimen>
+    <dimen name="ws_action_drawer_expand_icon_top_margin">-3dp</dimen>
+    <dimen name="ws_action_drawer_item_bottom_padding">8dp</dimen>
+    <dimen name="ws_action_drawer_item_icon_padding">7dp</dimen>
+    <dimen name="ws_action_drawer_item_icon_right_margin">8dp</dimen>
+    <dimen name="ws_action_drawer_item_icon_size">36dp</dimen>
+    <dimen name="ws_action_drawer_item_text_size">14sp</dimen>
+    <dimen name="ws_action_drawer_item_top_padding">8dp</dimen>
+    <dimen name="ws_action_drawer_peek_top_padding">2dp</dimen>
+    <dimen name="ws_action_drawer_peek_view_height">43dp</dimen>
+    <dimen name="ws_drawer_view_edge_size">38dp</dimen>
+    <dimen name="ws_nav_drawer_single_page_circle_radius">24dp</dimen>
+    <dimen name="ws_nav_drawer_single_page_icon_padding">6dp</dimen>
+    <dimen name="ws_nav_drawer_single_page_icon_size">28dp</dimen>
+    <dimen name="ws_nav_drawer_text_size">12sp</dimen>
+    <dimen name="ws_peek_view_bottom_padding">8dp</dimen>
+    <dimen name="ws_peek_view_icon_size">22dp</dimen>
+    <dimen name="ws_peek_view_top_padding">8dp</dimen>
+    <dimen name="ws_switch_size">40dp</dimen>
+    <dimen name="ws_wearable_drawer_view_elevation">12dp</dimen>
+    <dimen name="ws_wrv_curve_default_x_offset">24dp</dimen>
+    <item name="ws_action_drawer_item_first_item_top_padding" type="fraction">15%</item>
+    <item name="ws_action_drawer_item_last_item_bottom_padding" type="fraction">15%</item>
+    <item name="ws_action_drawer_item_left_padding" type="fraction">15%</item>
+    <item name="ws_action_drawer_item_right_padding" type="fraction">10%</item>
+    <fraction name="ws_nav_drawer_margin_2_items">20%</fraction>
+    <fraction name="ws_nav_drawer_margin_3_items">16%</fraction>
+    <fraction name="ws_nav_drawer_margin_4_items_horizontal">13%</fraction>
+    <fraction name="ws_nav_drawer_margin_4_items_vertical">16.9%</fraction>
+    <fraction name="ws_nav_drawer_margin_5_items_horizontal_middle_row">13%</fraction>
+    <fraction name="ws_nav_drawer_margin_5_items_horizontal_outer_rows">27.4%</fraction>
+    <fraction name="ws_nav_drawer_margin_5_items_vertical">16.9%</fraction>
+    <fraction name="ws_nav_drawer_margin_6_items_horizontal">16%</fraction>
+    <fraction name="ws_nav_drawer_margin_6_items_vertical">26.8%</fraction>
+    <fraction name="ws_nav_drawer_margin_7_items_horizontal_middle_row">13%</fraction>
+    <fraction name="ws_nav_drawer_margin_7_items_horizontal_outer_rows">27.4%</fraction>
+    <fraction name="ws_nav_drawer_margin_7_items_vertical">16.9%</fraction>
+    <fraction name="ws_nav_drawer_text_margin">13%</fraction>
+    <item name="ws_navigation_drawer_view_pager" type="id"/>
+    <string name="ws_action_drawer_content_description">Action drawer</string>
+    <string name="ws_navigation_drawer_content_description">Navigation drawer</string>
+    <style name="Widget.Wear.WearableDrawerView" parent="">
+        <item name="android:elevation">@dimen/ws_wearable_drawer_view_elevation</item>
+        <item name="android:background">?android:attr/colorBackgroundFloating</item>
+    </style>
+    <style name="WsSinglePageNavDrawerIconStyle">
+        <item name="android:layout_height">@dimen/ws_nav_drawer_single_page_icon_size</item>
+        <item name="android:layout_width">@dimen/ws_nav_drawer_single_page_icon_size</item>
+        <item name="android:padding">@dimen/ws_nav_drawer_single_page_icon_padding</item>
+        <item name="android:clipToPadding">false</item>
+        <item name="background_radius">@dimen/ws_nav_drawer_single_page_circle_radius</item>
+        <item name="background_color">#33ffffff</item>
+    </style>
+    <style name="WsSinglePageNavDrawerTextStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textSize">@dimen/ws_nav_drawer_text_size</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLines">2</item>
+        <item name="layout_marginTopPercent">@fraction/ws_nav_drawer_text_margin</item>
+        <item name="layout_marginStartPercent">@fraction/ws_nav_drawer_text_margin</item>
+        <item name="layout_marginEndPercent">@fraction/ws_nav_drawer_text_margin</item>
+    </style>
+</resources>

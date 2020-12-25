@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="EmojiEditText"><attr format="integer" name="maxEmojiCount"/></declare-styleable>
+    <declare-styleable name="EmojiExtractTextLayout"><attr format="enum" name="emojiReplaceStrategy">
+            
+            <enum name="defaultStrategy" value="0"/>
+            
+            <enum name="all" value="1"/>
+            
+            <enum name="nonExistent" value="2"/>
+        </attr></declare-styleable>
+</resources>
