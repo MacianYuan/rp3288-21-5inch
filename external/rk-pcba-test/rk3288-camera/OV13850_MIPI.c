@@ -1,0 +1,388 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
+
+#include "OV13850_MIPI_priv.h"
+#include "camsys_head.h"
+#include "camera_test.h"
+
+//==================================
+//sensor setting
+//==================================
+#define SENSOR_I2C_ADDR					0x20
+
+#define REG_STREAM_ON					0x0100
+#define REG_SOFTWARE_RST				0x0103
+#define REG_SOFTWARE_RST_DATA				0x01
+#define I2C_NR_ADR_BYTES                		2
+#define I2C_NR_DAT_BYTES                		0x01
+
+#define REG_CHIP_ID_H					0x300a
+#define REG_CHIP_ID_L					0x300b
+
+//=================================
+#define SENSOR_I2C_NUM					3
+#define SENSOR_I2C_RATE					100000
+struct rk_sensor_reg {
+	unsigned int reg;
+	unsigned int val;
+};
+
+
+struct rk_sensor_reg Ov13850_sensor_test[] = {
+	{0x0100, 0x00},
+	{0x0100, 0x00},
+	{0x0100, 0x00},
+	{0x0300, 0x01},
+	{0x0301, 0x00},
+	{0x0302, 0x28},
+	{0x0303, 0x00},
+	{0x030a, 0x00},
+	{0x300f, 0x11},
+	{0x3010, 0x01},
+	{0x3011, 0x76},
+	{0x3012, 0x21},
+	{0x3013, 0x12},
+	{0x3014, 0x11},
+	{0x301f, 0x03},
+	{0x3106, 0x00},
+	{0x3210, 0x47},
+	{0x3500, 0x00},
+	{0x3501, 0x60},
+	{0x3502, 0x00},
+	{0x3506, 0x00},
+	{0x3507, 0x02},
+	{0x3508, 0x00},
+	{0x350a, 0x00},
+	{0x350b, 0x80},
+	{0x350e, 0x00},
+	{0x350f, 0x10},
+	{0x351a, 0x00},
+	{0x351b, 0x10},
+	{0x351c, 0x00},
+	{0x351d, 0x20},
+	{0x351e, 0x00},
+	{0x351f, 0x40},
+	{0x3520, 0x00},
+	{0x3521, 0x80},
+	{0x3600, 0xc0},
+	{0x3601, 0xfc},
+	{0x3602, 0x02},
+	{0x3603, 0x78},
+	{0x3604, 0xb1},
+	{0x3605, 0xb5},
+	{0x3606, 0x73},
+	{0x3607, 0x07},
+	{0x3609, 0x40},
+	{0x360a, 0x30},
+	{0x360b, 0x91},
+	{0x360c, 0x09},
+	{0x360f, 0x02},
+	{0x3611, 0x10},
+	{0x3612, 0x27},
+	{0x3613, 0x33},
+	{0x3615, 0x0c},
+	{0x3616, 0x0e},
+	{0x3641, 0x02},
+	{0x3660, 0x82},
+	{0x3668, 0x54},
+	{0x3669, 0x00},
+	{0x366a, 0x3f},
+	{0x3667, 0xa0},
+	{0x3702, 0x40},
+	{0x3703, 0x44},
+	{0x3704, 0x2c},
+	{0x3705, 0x01},
+	{0x3706, 0x15},
+	{0x3707, 0x44},
+	{0x3708, 0x3c},
+	{0x3709, 0x1f},
+	{0x370a, 0x27},
+	{0x370b, 0x3c},
+	{0x3720, 0x55},
+	{0x3722, 0x84},
+	{0x3728, 0x40},
+	{0x372a, 0x00},
+	{0x372b, 0x02},
+	{0x372e, 0x22},
+	{0x372f, 0x90},
+	{0x3730, 0x00},
+	{0x3731, 0x00},
+	{0x3732, 0x00},
+	{0x3733, 0x00},
+	{0x3710, 0x28},
+	{0x3716, 0x03},
+	{0x3718, 0x10},
+	{0x3719, 0x0c},
+	{0x371a, 0x08},
+	{0x371c, 0xfc},
+	{0x3748, 0x00},
+	{0x3760, 0x13},
+	{0x3761, 0x33},
+	{0x3762, 0x86},
+	{0x3763, 0x16},
+	{0x3767, 0x24},
+	{0x3768, 0x06},
+	{0x3769, 0x45},
+	{0x376c, 0x23},
+	{0x376f, 0x80},
+	{0x3773, 0x06},
+	{0x3d84, 0x00},
+	{0x3d85, 0x17},
+	{0x3d8c, 0x73},
+	{0x3d8d, 0xbf},
+	{0x3800, 0x00},
+	{0x3801, 0x08},
+	{0x3802, 0x00},
+	{0x3803, 0x04},
+	{0x3804, 0x10},
+	{0x3805, 0x97},
+	{0x3806, 0x0c},
+	{0x3807, 0x4b},
+	{0x3808, 0x08},
+	{0x3809, 0x40},
+	{0x380a, 0x06},
+	{0x380b, 0x20},
+	{0x380c, 0x12},
+	{0x380d, 0xc0},
+	{0x380e, 0x06},
+	{0x380f, 0x80},
+	{0x3810, 0x00},
+	{0x3811, 0x04},
+	{0x3812, 0x00},
+	{0x3813, 0x02},
+	{0x3814, 0x31},
+	{0x3815, 0x31},
+	{0x3820, 0x02},
+	{0x3821, 0x06},
+	{0x3823, 0x00},
+	{0x3826, 0x00},
+	{0x3827, 0x02},
+	{0x3834, 0x00},
+	{0x3835, 0x1c},
+	{0x3836, 0x08},
+	{0x3837, 0x02},
+	{0x4000, 0xf1},
+	{0x4001, 0x00},
+	{0x4006, 0x04},
+	{0x4007, 0x04},
+	{0x400b, 0x0c},
+	{0x4011, 0x00},
+	{0x401a, 0x00},
+	{0x401b, 0x00},
+	{0x401c, 0x00},
+	{0x401d, 0x00},
+	{0x4020, 0x00},
+	{0x4021, 0xe4},
+	{0x4022, 0x04},
+	{0x4023, 0xd7},
+	{0x4024, 0x05},
+	{0x4025, 0xbc},
+	{0x4026, 0x05},
+	{0x4027, 0xbf},
+	{0x4028, 0x00},
+	{0x4029, 0x02},
+	{0x402a, 0x04},
+	{0x402b, 0x08},
+	{0x402c, 0x02},
+	{0x402d, 0x02},
+	{0x402e, 0x0c},
+	{0x402f, 0x08},
+	{0x403d, 0x2c},
+	{0x403f, 0x7f},
+	{0x4041, 0x07},
+	{0x4500, 0x82},
+	{0x4501, 0x3c},
+	{0x458b, 0x00},
+	{0x459c, 0x00},
+	{0x459d, 0x00},
+	{0x459e, 0x00},
+	{0x4601, 0x83},
+	{0x4602, 0x22},
+	{0x4603, 0x01},
+	{0x4837, 0x19},
+	{0x4d00, 0x04},
+	{0x4d01, 0x42},
+	{0x4d02, 0xd1},
+	{0x4d03, 0x90},
+	{0x4d04, 0x66},
+	{0x4d05, 0x65},
+	{0x4d0b, 0x00},
+	{0x5000, 0x0e},
+	{0x5001, 0x01},
+	{0x5002, 0x07},
+	{0x5013, 0x40},
+	{0x501c, 0x00},
+	{0x501d, 0x10},
+	{0x510f, 0xfc},
+	{0x5110, 0xf0},
+	{0x5111, 0x10},
+	{0x536d, 0x02},
+	{0x536e, 0x67},
+	{0x536f, 0x01},
+	{0x5370, 0x4c},
+	{0x5400, 0x00},
+	{0x5400, 0x00},
+	{0x5401, 0x61},
+	{0x5402, 0x00},
+	{0x5403, 0x00},
+	{0x5404, 0x00},
+	{0x5405, 0x40},
+	{0x540c, 0x05},
+	{0x5501, 0x00},
+	{0x5b00, 0x00},
+	{0x5b01, 0x00},
+	{0x5b02, 0x01},
+	{0x5b03, 0xff},
+	{0x5b04, 0x02},
+	{0x5b05, 0x6c},
+	{0x5b09, 0x02},
+	{0x5e00, 0x00},
+	{0x5e10, 0x1c},
+	//{0x0100, 0x01},
+	{0x0000 ,0x00}
+};
+
+
+int Ov13850_sensor_reg_init(int camsys_fd,unsigned int *i2cbase)
+{
+    int err,i2cbytes,i;
+    struct rk_sensor_reg *sensor_reg;
+    unsigned char *i2cchar;
+    camsys_sysctrl_t sysctl;    
+    camsys_i2c_info_t i2cinfo;
+    int id;
+    int size;
+
+    i2cinfo.bus_num = SENSOR_I2C_NUM;
+    i2cinfo.slave_addr = SENSOR_I2C_ADDR;
+    i2cinfo.reg_addr = REG_SOFTWARE_RST;
+    i2cinfo.reg_size = I2C_NR_ADR_BYTES; 
+    i2cinfo.val = REG_SOFTWARE_RST_DATA;
+    i2cinfo.val_size = I2C_NR_DAT_BYTES;
+    i2cinfo.i2cbuf_directly = 0;
+    i2cinfo.speed = SENSOR_I2C_RATE;
+       
+    err = ioctl(camsys_fd, CAMSYS_I2CWR, &i2cinfo);
+    if (err<0) {
+        printf("CAMSYS_I2CWR failed\n");
+    } else {
+        printf("I2c write: 0x%x : 0x%x\n",i2cinfo.reg_addr,i2cinfo.val);
+    }
+	printf("%s %d  hcc\n",__FUNCTION__,__LINE__);  
+
+    usleep(20000);    
+    
+    i2cinfo.reg_addr = REG_CHIP_ID_H;
+    i2cinfo.val_size = 0x01;       
+    err = ioctl(camsys_fd, CAMSYS_I2CRD, &i2cinfo);
+    if (err<0) {
+        printf("CAMSYS_I2CRD failed\n");
+    } else {
+        printf("I2c read: 0x%x : 0x%x\n",i2cinfo.reg_addr,i2cinfo.val);
+        id = (i2cinfo.val<<16);
+    }
+
+    i2cinfo.reg_addr = REG_CHIP_ID_L;
+    err = ioctl(camsys_fd, CAMSYS_I2CRD, &i2cinfo);
+    if (err<0) {
+        printf("CAMSYS_I2CRD failed\n");
+    } else {
+        printf("I2c read: 0x%x : 0x%x\n",i2cinfo.reg_addr,i2cinfo.val);
+        id |= i2cinfo.val;
+    }
+
+    printf("\n!!!!!!!!!!Sensor ID: 0x%x!!!!!!!!!!\n",id);
+    
+    i2cchar = (unsigned char*)i2cbase;
+
+	sensor_reg = Ov13850_sensor_test;
+	size = sizeof(Ov13850_sensor_test)/sizeof(struct rk_sensor_reg);
+
+    i2cbytes = 0x00;
+    for (i=0; i<size; i++) {
+        *i2cchar++ = (sensor_reg->reg&0xff00)>>8; 
+        *i2cchar++ = (sensor_reg->reg&0xff);
+        *i2cchar++ = (sensor_reg->val&0xff);
+        sensor_reg++;
+        i2cbytes += 3;
+    }
+    printf("i2cbytes(%d)\n",i2cbytes);
+
+    i2cinfo.bus_num = SENSOR_I2C_NUM;
+    i2cinfo.slave_addr = SENSOR_I2C_ADDR;
+    i2cinfo.i2cbuf_directly = 1;
+    i2cinfo.i2cbuf_bytes = ((3<<16)|i2cbytes);
+    i2cinfo.speed = SENSOR_I2C_RATE;
+    err = ioctl(camsys_fd, CAMSYS_I2CWR, &i2cinfo);
+    if (err<0) {
+        printf("CAMSYS_I2CWR buf failed\n"); 
+    }
+    return err;
+}
+int Ov13850_sensor_streamon(int camsys_fd,unsigned int on)
+{
+    int err,i2cbytes,i;
+    struct rk_sensor_reg *sensor_reg;
+    camsys_sysctrl_t sysctl;    
+    camsys_i2c_info_t i2cinfo;
+    int id;
+
+    i2cinfo.bus_num = SENSOR_I2C_NUM;
+    i2cinfo.slave_addr = SENSOR_I2C_ADDR;
+    i2cinfo.reg_addr = REG_STREAM_ON;
+    i2cinfo.reg_size = 2; 
+    i2cinfo.val = on;
+    i2cinfo.val_size = I2C_NR_DAT_BYTES;
+    i2cinfo.i2cbuf_directly = 0;
+    i2cinfo.speed = SENSOR_I2C_RATE;
+
+	usleep(1000 * 1000);
+       
+    err = ioctl(camsys_fd, CAMSYS_I2CWR, &i2cinfo);
+    if (err < 0) {
+        printf("extdev_streamon failed!\n");
+    }
+    printf("%s(%d): Sensor stream on : %d\n", __func__, __LINE__, on);
+    
+    return err;
+}
+
+int Ov13850_get_SensorInfo(rk_camera_info_t *rk_camera_info)
+{
+	//rk_camera_info_t rk_camera_info;
+	//rk_camera_info->Camsys_Teset_Driver_Version = "Camsys_Test_OV13850_v(0x0,0,1.0)";
+	//rk_camera_info->sensor_name     = "OV13850";
+
+	rk_camera_info->phy_type		= CamSys_Phy_Mipi; //cif:CamSys_Phy_Cif mipi:CamSys_Phy_Mipi
+	rk_camera_info->lane_num		= 2; //values:1,2,4
+	rk_camera_info->bit_rate		= 600;//328; //lane_num(1):720, lane_num(2):328, lane_num(4):408
+	rk_camera_info->phy_index		= 0x0; //Rx/Tx:0x1 Rx:0x0
+	rk_camera_info->mipi_img_data_sel = 0x2b; //cif:0x2c mipi:0x2b
+	rk_camera_info->cif_num			= 0;
+	rk_camera_info->fmt				= CamSys_Fmt_Raw_10b;
+	rk_camera_info->cifio			= CamSys_SensorBit0_CifBit4;
+
+	rk_camera_info->width			= 2112;
+	rk_camera_info->height			= 1568;
+
+	rk_camera_info->Mode			= RGB_BAYER;
+	rk_camera_info->YCSequence		= CbYCrY;		   
+	rk_camera_info->Conv422 		= Y0Cb0Y1Cr1;
+	rk_camera_info->BPat			= BGBGGRGR ;
+	rk_camera_info->HPol			= HPOL_HIGH;
+	rk_camera_info->VPol			= VPOL_LOW;
+	rk_camera_info->Edge			= SAMPLEEDGE_POS;
+	//rk_camera_info->SmiaMode		= ISI_SMIA_OFF;
+	//rk_camera_info->MipiMode		= ISI_MIPI_OFF;
+	//rk_camera_info->SensorOutputMode = ISI_SENSOR_OUTPUT_MODE_YUV;
+
+	rk_camera_info->dev_id = CAMSYS_DEVID_SENSOR_1A; //back:CAMSYS_DEVID_SENSOR_1A front:CAMSYS_DEVID_SENSOR_1B
+
+	strlcpy((char*)rk_camera_info->sensorname, "OV13850",sizeof(rk_camera_info->sensorname));
+	strlcpy((char*)rk_camera_info->version, "0x1.0.0",sizeof(rk_camera_info->version));
+	return 0;
+}
+

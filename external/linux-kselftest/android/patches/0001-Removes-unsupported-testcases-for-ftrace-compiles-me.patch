@@ -1,0 +1,346 @@
+From cd038753c3543ee6919469a4472cdf86ea0121c8 Mon Sep 17 00:00:00 2001
+From: Tri Vo <trong@google.com>
+Date: Sun, 28 Aug 2016 16:55:24 -0700
+Subject: [PATCH] Removes unsupported testcases for ftrace, compiles
+ membarrier, net/psock_tpacket, timers/valid-adjtimex. Added a list of
+ testfiles that could potentially be compiled in Android.kselftest.mk.
+
+Change-Id: I5162512d4166a523ef8f23c23b59cb1275b29748
+---
+ Android.mk                                      |   3 +-
+ android/Android.kselftest.mk                    |  95 ++++-------------
+ kselftest_test_list.txt                         | 131 ++++++++++++++++++++++++
+ tools/testing/selftests/net/psock_tpacket.c     |   2 +
+ tools/testing/selftests/timers/valid-adjtimex.c |   5 +-
+ 5 files changed, 157 insertions(+), 79 deletions(-)
+ create mode 100644 kselftest_test_list.txt
+
+diff --git a/Android.mk b/Android.mk
+index 5f54f0b8f6d4..5fcd095f97bf 100644
+--- a/Android.mk
++++ b/Android.mk
+@@ -54,7 +54,8 @@ kselftest_cflags := \
+     -Wno-switch \
+     -Wno-absolute-value \
+     -Wno-non-literal-null-conversion \
+-    -Wall \
++    -Wno-unused-variable \
++    -Wno-unused-parameter \
+     -Werror \
+ 
+ build_kselftest_test := $(kselftest_root)/android/Android.test.mk
+diff --git a/android/Android.kselftest.mk b/android/Android.kselftest.mk
+index 932374afde02..19f16bd25785 100644
+--- a/android/Android.kselftest.mk
++++ b/android/Android.kselftest.mk
+@@ -50,58 +50,6 @@ module_prebuilt := ftrace/ftracetest
+ module_src_files := ftrace/ftracetest
+ include $(build_kselftest_prebuilt)
+ 
+-module_prebuilt := ftrace/test.d/trigger/trigger-hist
+-module_src_files := ftrace/test.d/trigger/trigger-hist.tc
+-include $(build_kselftest_prebuilt)
+-
+-module_prebuilt := ftrace/test.d/trigger/trigger-traceonoff
+-module_src_files := ftrace/test.d/trigger/trigger-traceonoff.tc
+-include $(build_kselftest_prebuilt)
+-
+-module_prebuilt := ftrace/test.d/trigger/trigger-hist-mod
+-module_src_files := ftrace/test.d/trigger/trigger-hist-mod.tc
+-include $(build_kselftest_prebuilt)
+-
+-module_prebuilt := ftrace/test.d/trigger/trigger-stacktrace
+-module_src_files := ftrace/test.d/trigger/trigger-stacktrace.tc
+-include $(build_kselftest_prebuilt)
+-
+-module_prebuilt := ftrace/test.d/trigger/trigger-multihist
+-module_src_files := ftrace/test.d/trigger/trigger-multihist.tc
+-include $(build_kselftest_prebuilt)
+-
+-module_prebuilt := ftrace/test.d/trigger/trigger-filter
+-module_src_files := ftrace/test.d/trigger/trigger-filter.tc
+-include $(build_kselftest_prebuilt)
+-
+-module_prebuilt := ftrace/test.d/trigger/trigger-snapshot
+-module_src_files := ftrace/test.d/trigger/trigger-snapshot.tc
+-include $(build_kselftest_prebuilt)
+-
+-module_prebuilt := ftrace/test.d/trigger/trigger-eventonoff
+-module_src_files := ftrace/test.d/trigger/trigger-eventonoff.tc
+-include $(build_kselftest_prebuilt)
+-
+-module_prebuilt := ftrace/test.d/kprobe/busy_check
+-module_src_files := ftrace/test.d/kprobe/busy_check.tc
+-include $(build_kselftest_prebuilt)
+-
+-module_prebuilt := ftrace/test.d/kprobe/kretprobe_args
+-module_src_files := ftrace/test.d/kprobe/kretprobe_args.tc
+-include $(build_kselftest_prebuilt)
+-
+-module_prebuilt := ftrace/test.d/kprobe/kprobe_ftrace
+-module_src_files := ftrace/test.d/kprobe/kprobe_ftrace.tc
+-include $(build_kselftest_prebuilt)
+-
+-module_prebuilt := ftrace/test.d/kprobe/add_and_remove
+-module_src_files := ftrace/test.d/kprobe/add_and_remove.tc
+-include $(build_kselftest_prebuilt)
+-
+-module_prebuilt := ftrace/test.d/kprobe/kprobe_args
+-module_src_files := ftrace/test.d/kprobe/kprobe_args.tc
+-include $(build_kselftest_prebuilt)
+-
+ module_prebuilt := ftrace/test.d/functions
+ module_src_files := ftrace/test.d/functions
+ include $(build_kselftest_prebuilt)
+@@ -126,22 +74,6 @@ module_prebuilt := ftrace/test.d/template
+ module_src_files := ftrace/test.d/template
+ include $(build_kselftest_prebuilt)
+ 
+-module_prebuilt := ftrace/test.d/event/event-pid
+-module_src_files := ftrace/test.d/event/event-pid.tc
+-include $(build_kselftest_prebuilt)
+-
+-module_prebuilt := ftrace/test.d/event/subsystem-enable
+-module_src_files := ftrace/test.d/event/subsystem-enable.tc
+-include $(build_kselftest_prebuilt)
+-
+-module_prebuilt := ftrace/test.d/event/event-enable
+-module_src_files := ftrace/test.d/event/event-enable.tc
+-include $(build_kselftest_prebuilt)
+-
+-module_prebuilt := ftrace/test.d/event/toplevel-enable
+-module_src_files := ftrace/test.d/event/toplevel-enable.tc
+-include $(build_kselftest_prebuilt)
+-
+ module_prebuilt := ftrace/test.d/instances/instance
+ module_src_files := ftrace/test.d/instances/instance.tc
+ include $(build_kselftest_prebuilt)
+@@ -150,14 +82,6 @@ module_prebuilt := ftrace/test.d/instances/instance-event
+ module_src_files := ftrace/test.d/instances/instance-event.tc
+ include $(build_kselftest_prebuilt)
+ 
+-module_prebuilt := ftrace/test.d/ftrace/func_profiler
+-module_src_files := ftrace/test.d/ftrace/func_profiler.tc
+-include $(build_kselftest_prebuilt)
+-
+-module_prebuilt := ftrace/test.d/ftrace/fgraph-filter-stack
+-module_src_files := ftrace/test.d/ftrace/fgraph-filter-stack.tc
+-include $(build_kselftest_prebuilt)
+-
+ # Futex test
+ module_testname := futex/functional/futex_wait_timeout
+ module_src_files := futex/functional/futex_wait_timeout.c
+@@ -205,6 +129,13 @@ module_prebuilt := lib/bitmap
+ module_src_files := lib/bitmap.sh
+ include $(build_kselftest_prebuilt)
+ 
++# Membarrier test
++module_testname := membarrier/membarrier_test
++module_src_files := membarrier/membarrier_test.c
++module_cflags :=
++module_c_includes :=
++include $(build_kselftest_test)
++
+ # Memory-hotplug test
+ module_prebuilt := memory-hotplug/mem-on-off-test
+ module_src_files := memory-hotplug/mem-on-off-test.sh
+@@ -234,6 +165,12 @@ module_cflags := -Wall -O2 -g
+ module_c_includes :=
+ include $(build_kselftest_test)
+ 
++module_testname := net/psock_tpacket
++module_src_files := net/psock_tpacket.c
++module_cflags := -Wall -O2 -g
++module_c_includes :=
++include $(build_kselftest_test)
++
+ module_testname := net/reuseport_dualstack
+ module_src_files := net/reuseport_dualstack.c
+ module_cflags := -Wall -O2 -g
+@@ -337,6 +274,12 @@ module_cflags := -O3 -Wl,-no-as-needed -Wall -DKTEST  -lrt -lpthread
+ module_c_includes :=
+ include $(build_kselftest_test)
+ 
++module_testname := timers/valid-adjtimex
++module_src_files := timers/valid-adjtimex.c
++module_cflags := -O3 -Wl,-no-as-needed -Wall -DKTEST  -lrt -lpthread
++module_c_includes :=
++include $(build_kselftest_test)
++
+ module_testname := timers/adjtick
+ module_src_files := timers/adjtick.c
+ module_cflags := -O3 -Wl,-no-as-needed -Wall -DKTEST  -lrt -lpthread
+diff --git a/kselftest_test_list.txt b/kselftest_test_list.txt
+new file mode 100644
+index 000000000000..2e98b336fcc8
+--- /dev/null
++++ b/kselftest_test_list.txt
+@@ -0,0 +1,131 @@
++# This is a list of test files that are already compiled by Android.kselftest.mk
++# or could potentially be added there.
++
++breakpoints/breakpoint_test.c
++breakpoints/step_after_suspend_test.c
++capabilities/test_execve.c
++capabilities/validate_cap.c
++cpu-hotplug/cpu-on-off-test.sh
++efivarfs/create-read.c
++efivarfs/efivarfs.sh
++efivarfs/open-unlink.c
++exec/execveat.c
++firmware/fw_filesystem.sh
++firmware/fw_userhelper.sh
++ftrace/ftracetest
++ftrace/test.d/00basic
++ftrace/test.d/00basic/basic1.tc
++ftrace/test.d/00basic/basic2.tc
++ftrace/test.d/00basic/basic3.tc
++ftrace/test.d/00basic/basic4.tc
++ftrace/test.d/event/event-enable.tc
++ftrace/test.d/event/event-pid.tc
++ftrace/test.d/event/subsystem-enable.tc
++ftrace/test.d/event/toplevel-enable.tc
++ftrace/test.d/ftrace/fgraph-filter-stack.tc
++ftrace/test.d/ftrace/fgraph-filter.tc
++ftrace/test.d/ftrace/func_profiler.tc
++ftrace/test.d/functions
++ftrace/test.d/instances/instance-event.tc
++ftrace/test.d/instances/instance.tc
++ftrace/test.d/kprobe/add_and_remove.tc
++ftrace/test.d/kprobe/busy_check.tc
++ftrace/test.d/kprobe/kprobe_args.tc
++ftrace/test.d/kprobe/kprobe_ftrace.tc
++ftrace/test.d/kprobe/kretprobe_args.tc
++ftrace/test.d/template
++ftrace/test.d/trigger/trigger-eventonoff.tc
++ftrace/test.d/trigger/trigger-filter.tc
++ftrace/test.d/trigger/trigger-hist-mod.tc
++ftrace/test.d/trigger/trigger-hist.tc
++ftrace/test.d/trigger/trigger-multihist.tc
++ftrace/test.d/trigger/trigger-snapshot.tc
++ftrace/test.d/trigger/trigger-stacktrace.tc
++ftrace/test.d/trigger/trigger-traceonoff.tc
++futex/functional/futex_requeue_pi.c
++futex/functional/futex_requeue_pi_mismatched_ops.c
++futex/functional/futex_requeue_pi_signal_restart.c
++futex/functional/futex_wait_private_mapped_file.c
++futex/functional/futex_wait_timeout.c
++futex/functional/futex_wait_uninitialized_heap.c
++futex/functional/futex_wait_wouldblock.c
++intel_pstate/aperf.c
++intel_pstate/msr.c
++intel_pstate/run.sh
++ipc/msgque.c
++kcmp/kcmp_test.c
++lib/bitmap.sh
++lib/printf.sh
++lib.mk
++media_tests/bind_unbind_sample.sh
++media_tests/media_device_open.c
++media_tests/media_device_test.c
++media_tests/open_loop_test.sh
++media_tests/regression_test.txt
++media_tests/video_device_test.c
++membarrier/membarrier_test.c
++memfd/fuse_mnt.c
++memfd/fuse_test.c
++memfd/memfd_test.c
++memfd/run_fuse_test.sh
++memory-hotplug/mem-on-off-test.sh
++mount/unprivileged-remount-test.c
++mqueue/mq_open_tests.c
++mqueue/mq_perf_tests.c
++net/psock_fanout.c
++net/psock_tpacket.c
++net/reuseport_bpf.c
++net/reuseport_bpf_cpu.c
++net/reuseport_dualstack.c
++net/run_afpackettests
++net/run_netsocktests
++net/socket.c
++net/test_bpf.sh
++ntb/ntb_test.sh
++pstore/common_tests
++pstore/pstore_crash_test
++pstore/pstore_post_reboot_tests
++pstore/pstore_tests
++ptrace/peeksiginfo.c
++seccomp/seccomp_bpf.c
++sigaltstack/sas.c
++size/get_size.c
++static_keys/test_static_keys.sh
++sysctl/common_tests
++sysctl/run_numerictests
++sysctl/run_stringtests
++timers/adjtick.c
++timers/alarmtimer-suspend.c
++timers/change_skew.c
++timers/clocksource-switch.c
++timers/inconsistency-check.c
++timers/leap-a-day.c
++timers/leapcrash.c
++timers/mqueue-lat.c
++timers/nanosleep.c
++timers/nsleep-lat.c
++timers/posix_timers.c
++timers/raw_skew.c
++timers/rtctest.c
++timers/set-2038.c
++timers/set-tai.c
++timers/set-timer-lat.c
++timers/set-tz.c
++timers/skew_consistency.c
++timers/threadtest.c
++timers/valid-adjtimex.c
++user/test_user_copy.sh
++vm/compaction_test.c
++vm/hugepage-mmap.c
++vm/hugepage-shm.c
++vm/map_hugetlb.c
++vm/mlock2-tests.c
++vm/on-fault-limit.c
++vm/run_vmtests
++vm/thuge-gen.c
++vm/transhuge-stress.c
++vm/userfaultfd.c
++zram/zram01.sh
++zram/zram02.sh
++zram/zram_lib.sh
++zram/zram.sh
+diff --git a/tools/testing/selftests/net/psock_tpacket.c b/tools/testing/selftests/net/psock_tpacket.c
+index 24adf709bd9d..7a1bb6f8c2a2 100644
+--- a/tools/testing/selftests/net/psock_tpacket.c
++++ b/tools/testing/selftests/net/psock_tpacket.c
+@@ -47,7 +47,9 @@
+ #include <ctype.h>
+ #include <fcntl.h>
+ #include <unistd.h>
++#ifndef __ANDROID__
+ #include <bits/wordsize.h>
++#endif
+ #include <net/ethernet.h>
+ #include <netinet/ip.h>
+ #include <arpa/inet.h>
+diff --git a/tools/testing/selftests/timers/valid-adjtimex.c b/tools/testing/selftests/timers/valid-adjtimex.c
+index 60fe3c569bd9..aeade9f975ea 100644
+--- a/tools/testing/selftests/timers/valid-adjtimex.c
++++ b/tools/testing/selftests/timers/valid-adjtimex.c
+@@ -50,12 +50,13 @@ static inline int ksft_exit_fail(void)
+ 
+ #define ADJ_SETOFFSET 0x0100
+ 
++#ifndef __ANDROID__
+ #include <sys/syscall.h>
+ static int clock_adjtime(clockid_t id, struct timex *tx)
+ {
+-	return syscall(__NR_clock_adjtime, id, tx);
++    return syscall(__NR_clock_adjtime, id, tx);
+ }
+-
++#endif
+ 
+ /* clear NTP time_status & time_state */
+ int clear_time_state(void)
+-- 
+2.13.1.518.g3df882009-goog
+

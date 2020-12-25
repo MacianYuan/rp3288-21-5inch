@@ -1,0 +1,221 @@
+From 0fd3eaf312c6284450f758e3a49c5cfd855e4847 Mon Sep 17 00:00:00 2001
+From: Tri Vo <trong@google.com>
+Date: Wed, 21 Sep 2016 15:10:38 -0700
+Subject: [PATCH] Compile breakpoints and x86 tests. Test: make vts
+
+Change-Id: I0c5dd63b3386adb22f3370a8b736d190c781bd4f
+---
+ android/Android.kselftest.mk              | 121 ++++++++++++++++++++++++++++++
+ android/Android.test.mk                   |   2 +-
+ tools/testing/selftests/x86/test_FISTTP.c |  18 +++++
+ 3 files changed, 140 insertions(+), 1 deletion(-)
+
+diff --git a/android/Android.kselftest.mk b/android/Android.kselftest.mk
+index 57e727d66bb6..cabc1f6a10b4 100644
+--- a/android/Android.kselftest.mk
++++ b/android/Android.kselftest.mk
+@@ -14,6 +14,21 @@
+ # limitations under the License.
+ #
+ 
++# breakpoints test
++module_testname := breakpoints/breakpoint_test
++module_src_files := breakpoints/breakpoint_test.c
++module_cflags :=
++module_c_includes :=
++module_supported_arch := x86 x86_64
++include $(build_kselftest_test)
++
++module_testname := breakpoints/step_after_suspend_test
++module_src_files := breakpoints/step_after_suspend_test.c
++module_cflags :=
++module_c_includes :=
++module_supported_arch := x86 x86_64
++include $(build_kselftest_test)
++
+ # Cpu-hotplug test
+ module_prebuilt := cpu-hotplug/cpu-on-off-test
+ module_src_files := cpu-hotplug/cpu-on-off-test.sh
+@@ -477,6 +492,112 @@ module_c_includes :=
+ module_supported_arch := arm arm64 x86 x86_64
+ include $(build_kselftest_test)
+ 
++# x86 test
++module_testname := x86/single_step_syscall
++module_src_files := x86/single_step_syscall.c
++module_cflags := -O2 -g -std=gnu99 -pthread -Wall -lrt -ldl -lm
++module_c_includes :=
++module_supported_arch := x86 x86_64
++include $(build_kselftest_test)
++
++module_testname := x86/sysret_ss_attrs
++module_src_files := x86/sysret_ss_attrs.c
++module_cflags := -O2 -g -std=gnu99 -pthread -Wall -lrt -ldl -lm
++module_c_includes :=
++module_supported_arch := x86
++include $(build_kselftest_test)
++
++module_testname := x86/syscall_nt
++module_src_files := x86/syscall_nt.c
++module_cflags := -O2 -g -std=gnu99 -pthread -Wall -lrt -ldl -lm
++module_c_includes :=
++module_supported_arch := x86 x86_64
++include $(build_kselftest_test)
++
++module_testname := x86/ptrace_syscall
++module_src_files := x86/ptrace_syscall.c x86/raw_syscall_helper_32.S
++module_cflags := -O2 -g -std=gnu99 -pthread -Wall -lrt -ldl -lm
++module_c_includes :=
++module_supported_arch := x86 x86_64
++include $(build_kselftest_test)
++
++module_testname := x86/test_mremap_vdso
++module_src_files := x86/test_mremap_vdso.c
++module_cflags := -O2 -g -std=gnu99 -pthread -Wall -lrt -ldl -lm
++module_c_includes :=
++module_supported_arch := x86 x86_64
++include $(build_kselftest_test)
++
++module_testname := x86/check_initial_reg_state
++module_src_files := x86/check_initial_reg_state.c
++module_cflags := -O2 -g -std=gnu99 -pthread -Wall -Wl,-ereal_start -static -lrt -ldl -lm
++module_c_includes :=
++module_supported_arch := x86 x86_64
++include $(build_kselftest_test)
++
++module_testname := x86/ldt_gdt
++module_src_files := x86/ldt_gdt.c
++module_cflags := -O2 -g -std=gnu99 -pthread -Wall -lrt -ldl -lm
++module_c_includes :=
++module_supported_arch := x86 x86_64
++include $(build_kselftest_test)
++
++module_testname := x86/entry_from_vm86
++module_src_files := x86/entry_from_vm86.c
++module_cflags := -O2 -g -std=gnu99 -pthread -Wall -lrt -ldl -lm
++module_c_includes :=
++module_supported_arch := x86
++#include $(build_kselftest_test)
++
++module_testname := x86/syscall_arg_fault
++module_src_files := x86/syscall_arg_fault.c
++module_cflags := -O2 -g -std=gnu99 -pthread -lrt -ldl -lm
++module_c_includes :=
++module_supported_arch := x86
++include $(build_kselftest_test)
++
++module_testname := x86/test_syscall_vdso
++module_src_files := x86/test_syscall_vdso.c x86/thunks_32.S
++module_cflags := -O2 -g -std=gnu99 -pthread -Wall -lrt -ldl -lm
++module_c_includes :=
++module_supported_arch := x86
++include $(build_kselftest_test)
++
++module_testname := x86/unwind_vdso
++module_src_files := x86/unwind_vdso.c
++module_cflags := -O2 -g -std=gnu99 -pthread -Wall -lrt -ldl -lm
++module_c_includes :=
++module_supported_arch := x86
++include $(build_kselftest_test)
++
++module_testname := x86/test_FCMOV
++module_src_files := x86/test_FCMOV.c
++module_cflags := -O2 -g -std=gnu99 -pthread -Wall -lrt -ldl -lm
++module_c_includes :=
++module_supported_arch := x86
++include $(build_kselftest_test)
++
++module_testname := x86/test_FCOMI
++module_src_files := x86/test_FCOMI.c
++module_cflags := -O2 -g -std=gnu99 -pthread -Wall -lrt -ldl -lm
++module_c_includes :=
++module_supported_arch := x86
++include $(build_kselftest_test)
++
++module_testname := x86/test_FISTTP
++module_src_files := x86/test_FISTTP.c
++module_cflags := -O2 -g -std=gnu99 -pthread -Wall -lrt -ldl -lm
++module_c_includes :=
++module_supported_arch := x86
++include $(build_kselftest_test)
++
++module_testname := x86/vdso_restorer
++module_src_files := x86/vdso_restorer.c
++module_cflags := -O2 -g -std=gnu99 -pthread -Wall -lrt -ldl -lm
++module_c_includes :=
++module_supported_arch := x86
++include $(build_kselftest_test)
++
+ # zram tests
+ module_prebuilt := zram/zram.sh
+ module_src_files := zram/zram.sh
+diff --git a/android/Android.test.mk b/android/Android.test.mk
+index efafc2708bc9..d72775118063 100644
+--- a/android/Android.test.mk
++++ b/android/Android.test.mk
+@@ -21,7 +21,7 @@ ifneq (,$(findstring $(kselftest_target_arch), $(module_supported_arch)))
+ 
+ module_name := kselftest_$(subst /,_,$(module_testname))
+ module_stem := $(notdir $(module_testname))
+-module_path := $(dir $(module_src_files))
++module_path := $(dir $(module_testname))
+ 
+ LOCAL_MODULE := $(module_name)
+ LOCAL_MODULE_STEM_32 := $(module_stem)
+diff --git a/tools/testing/selftests/x86/test_FISTTP.c b/tools/testing/selftests/x86/test_FISTTP.c
+index b8e61a047f6b..6cae2d45b246 100644
+--- a/tools/testing/selftests/x86/test_FISTTP.c
++++ b/tools/testing/selftests/x86/test_FISTTP.c
+@@ -24,7 +24,11 @@ int test(void)
+ 	feclearexcept(FE_DIVBYZERO|FE_INEXACT|FE_INVALID|FE_OVERFLOW|FE_UNDERFLOW);
+ 	asm volatile ("\n"
+ 	"	fld1""\n"
++#ifdef __clang__
++	"	fisttps	res16""\n"
++#else
+ 	"	fisttp	res16""\n"
++#endif
+ 	"	fld1""\n"
+ 	"	fisttpl	res32""\n"
+ 	"	fld1""\n"
+@@ -44,7 +48,11 @@ int test(void)
+ 	feclearexcept(FE_DIVBYZERO|FE_INEXACT|FE_INVALID|FE_OVERFLOW|FE_UNDERFLOW);
+ 	asm volatile ("\n"
+ 	"	fldpi""\n"
++#ifdef __clang__
++	"	fisttps	res16""\n"
++#else
+ 	"	fisttp	res16""\n"
++#endif
+ 	"	fldpi""\n"
+ 	"	fisttpl	res32""\n"
+ 	"	fldpi""\n"
+@@ -65,7 +73,13 @@ int test(void)
+ 	asm volatile ("\n"
+ 	"	fldpi""\n"
+ 	"	fchs""\n"
++#ifdef __clang__
++	"	fisttps	res16""\n"
++#else
++    // clang will complain: ambiguous instructions require an explicit suffix
++    // (could be 'fisttps', or 'fisttpl')
+ 	"	fisttp	res16""\n"
++#endif
+ 	"	fldpi""\n"
+ 	"	fchs""\n"
+ 	"	fisttpl	res32""\n"
+@@ -87,7 +101,11 @@ int test(void)
+ 	feclearexcept(FE_DIVBYZERO|FE_INEXACT|FE_INVALID|FE_OVERFLOW|FE_UNDERFLOW);
+ 	asm volatile ("\n"
+ 	"	fldln2""\n"
++#ifdef __clang__
++	"	fisttps	res16""\n"
++#else
+ 	"	fisttp	res16""\n"
++#endif
+ 	"	fldln2""\n"
+ 	"	fisttpl	res32""\n"
+ 	"	fldln2""\n"
+-- 
+2.13.1.518.g3df882009-goog
+

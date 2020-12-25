@@ -1,0 +1,5 @@
+The source code path for lib:
+	hardware/rockchip/libgralloc.
+
+Current branch is remotes/rk/soc_with_utgard_gpu/7.1/develop_drm:
+	ba580d1 Remove usage check for cts failure.
