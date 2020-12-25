@@ -1,0 +1,1 @@
+export TARGET_BUILD_DTB=pro-rk3288

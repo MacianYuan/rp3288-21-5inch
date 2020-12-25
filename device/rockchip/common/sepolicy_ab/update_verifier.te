@@ -1,0 +1,2 @@
+allow update_verifier sysfs:file r_file_perms;
+allow update_verifier sysfs:dir r_dir_perms;

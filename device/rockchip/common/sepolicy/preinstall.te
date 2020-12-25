@@ -1,0 +1,82 @@
+########################################
+# sepolicy rules for preinstall 
+########################################
+
+
+#typeattribute preinstall coredomain;
+#
+#
+#
+type preinstall, domain;
+type preinstall_exec, exec_type, vendor_file_type, file_type;
+
+permissive preinstall;
+init_daemon_domain(preinstall) 
+
+#type preinstall, domain, domain_deprecated;
+#type preinstall_exec, exec_type, file_type;
+#
+#allow init system_file:file { setattr };
+#
+#allow preinstall shell_exec:file { getattr };
+#allow preinstall shell_exec:file { read };
+#allow preinstall shell_exec:file { execute };
+#allow preinstall shell_exec:file { open };
+#allow preinstall shell_exec:file { execute_no_trans };
+#
+#allow preinstall su_exec:file { getattr };
+#allow preinstall su_exec:file { execute };
+#allow preinstall su_exec:file { read open };
+#allow preinstall su_exec:file { execute_no_trans };
+#
+#allow preinstall ashmem_device:chr_file { execute };
+#allow preinstall servicemanager:binder { call };
+#allow preinstall toolbox_exec:file { read open };
+#allow preinstall toolbox_exec:file { getattr };
+#allow preinstall toolbox_exec:file { execute };
+#allow preinstall toolbox_exec:file { execute_no_trans };
+#
+#allow preinstall system_file:dir { setattr };
+#allow preinstall system_file:dir { write };
+#allow preinstall system_file:dir { remove_name };
+#allow preinstall system_file:file { execute_no_trans };
+#allow preinstall system_file:file { execute };
+#allow preinstall system_file:file { open };
+#allow preinstall system_file:file { unlink };
+#allow preinstall system_file:file { setattr };
+##allow preinstall system_file:file { entrypoint };
+#allow preinstall shell_exec:file { execute_no_trans };
+#
+#allow preinstall zygote_exec:file { getattr };
+#allow preinstall zygote_exec:file { execute };
+#allow preinstall zygote_exec:file { read open };
+#allow preinstall zygote_exec:file { execute_no_trans };
+#
+#allow preinstall preinstall:process { execmem };
+#allow preinstall preinstall_tmpfs:file { execute };
+#allow preinstall preinstall:capability { dac_override };
+#allow preinstall preinstall:capability { setgid };
+#allow preinstall preinstall:capability { setuid };
+#
+#
+#allow preinstall dalvikcache_data_file:dir { add_name };
+#allow preinstall dalvikcache_data_file:dir { write };
+#allow preinstall dalvikcache_data_file:dir { read };
+#allow preinstall dalvikcache_data_file:dir { open };
+#allow preinstall dalvikcache_data_file:dir { remove_name };
+#allow preinstall dalvikcache_data_file:dir { unlink };
+#
+#allow preinstall dalvikcache_data_file:file { unlink };
+#allow preinstall dalvikcache_data_file:file { create };
+#allow preinstall dalvikcache_data_file:file { write };
+#allow preinstall dalvikcache_data_file:lnk_file { read };
+#allow preinstall dalvikcache_data_file:lnk_file { getattr };
+#
+#allow preinstall system_server:binder { call };
+#allow preinstall system_server:binder { transfer };
+#allow preinstall system_server:unix_stream_socket { getopt };
+#allow preinstall system_server:unix_stream_socket { read write };
+#
+#allow preinstall device:sock_file { write };
+##allow preinstall superuser:unix_stream_socket { connectto };
+#init_daemon_domain(preinstall)

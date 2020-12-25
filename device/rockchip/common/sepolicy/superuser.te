@@ -1,0 +1,7 @@
+
+type superuser, domain;
+type superuser_exec, exec_type, vendor_file_type, file_type;
+
+permissive superuser;
+init_daemon_domain(superuser) 
+

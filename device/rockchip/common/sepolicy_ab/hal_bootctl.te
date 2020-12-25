@@ -1,0 +1,23 @@
+# These are the permissions required to use the Boot Control HAL implemented
+# here: hardware/qcom/bootctrl/boot_control.c
+
+# Getting and setting GPT attributes for the bootloader iterates over all the
+# partition names in the block_device directory /dev/block/.../by-name
+allow hal_bootctl block_device:dir r_dir_perms;
+
+# Get attributes on all the A/B partitions.
+allow hal_bootctl {
+  custom_ab_block_device
+  e2fsck_oem_block_device
+  boot_block_device
+  system_block_device
+  e2fsck_oem_block_device
+}:blk_file { getattr };
+
+allow hal_bootctl misc_block_device:chr_file rw_file_perms;
+allow hal_bootctl self:capability sys_admin;
+
+allow hal_bootctl sysfs:file r_file_perms;
+allow hal_bootctl sysfs:dir r_dir_perms;
+
+allow hal_bootctl misc_block_device:blk_file rw_file_perms;

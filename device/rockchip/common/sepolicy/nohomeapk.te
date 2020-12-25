@@ -1,0 +1,7 @@
+
+type nohomeapk, domain;
+type nohomeapk_exec, exec_type, vendor_file_type, file_type;
+
+permissive nohomeapk;
+init_daemon_domain(nohomeapk) 
+

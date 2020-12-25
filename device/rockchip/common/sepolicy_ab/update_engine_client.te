@@ -1,0 +1,3 @@
+# update_engine_client attribute.
+allow update_engine_client update_engine_service:service_manager find;
+bidi_binder_call(update_engine_client, update_engine)

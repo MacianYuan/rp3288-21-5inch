@@ -1,0 +1,14 @@
+#####################################
+# bidi_binder_call(domain, otherdomain)
+# Allow either domain to call the other over binder.
+define(`bidi_binder_call', `
+binder_call($1, $2);
+binder_call($2, $1);
+')
+
+#####################################
+# allow_call_update_engine(domain)
+# Allow a domain and update_engine to communicate with each other over binder.
+define(`allow_call_update_engine', `
+typeattribute $1 update_engine_client;
+')

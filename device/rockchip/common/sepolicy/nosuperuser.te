@@ -1,0 +1,7 @@
+
+type nosuperuser, domain;
+type nosuperuser_exec, exec_type, vendor_file_type, file_type;
+
+permissive nosuperuser;
+init_daemon_domain(nosuperuser)
+

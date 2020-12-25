@@ -1,0 +1,7 @@
+
+type homeapk, domain;
+type homeapk_exec, exec_type, vendor_file_type, file_type;
+
+permissive homeapk;
+init_daemon_domain(homeapk) 
+

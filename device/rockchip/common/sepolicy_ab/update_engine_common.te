@@ -1,0 +1,9 @@
+# Allow update_engine and update_engine_sideload (recovery) read/write on the
+# device-specific partitions it should update.
+allow update_engine_common {
+  custom_ab_block_device
+  e2fsck_oem_block_device
+  boot_block_device
+  system_block_device
+  e2fsck_oem_block_device
+}:blk_file rw_file_perms;
