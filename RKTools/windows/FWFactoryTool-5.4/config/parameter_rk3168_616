@@ -1,0 +1,11 @@
+FIRMWARE_VER:4.1.1
+MACHINE_MODEL:rk30sdk
+MACHINE_ID:007
+MANUFACTURER:RK30SDK
+MAGIC: 0x5041524B
+ATAG: 0x60000800
+MACHINE: 3066
+CHECK_MASK: 0x80
+KERNEL_IMG: 0x60408000
+#RECOVER_KEY: 1,1,0,20,0
+CMDLINE:board.pwr_on=0x000000a0 board.lcd_param=1,0,1,50000000,500000000,30,10,1024,210,13,10,600,22,154,85,1,0 board.lcd_cs=0x000003d4 board.lcd_en=0x000100b0 board.lcd_std=0x000102c6 board.bl_max=255 board.bl_min=33 board.bl_ref=0 board.bl_div=20000 board.bl_mode=1 board.bl_pwmid=3 board.bl_en=0x000000a2 board.tp_ymax=600 board.tp_xmax=1024 board.tp_addr=0x40 board.tp_i2c=2 board.tp_rst=0x000100b6 board.tp_irq=0x000001b7 board.tp_type=1 board.bat_discharge=3495,3570,3630,3700,3740,3790,3825,3865,3920,3980,4050 board.bat_charge=3600,3700,3760,3810,3870,3910,3960,4020,4080,4130,4180 board.low_vol=3600 board.save_cap=1 board.root_chg=1 board.down_res=120 board.up_res=200 board.ref_vol=1800 board.chg_ok=0x000100a6 board.dc_det=0x000100b2 board.codec_addr=0x50 board.codec_i2c=4 board.codec_hdmi_irq=0x000002d6 board.codec_rst=0x000003b2 board.codec_power=0x000000a3 board.hp_det=0x000000b5 board.spk_ctl=0x000002d7 board.codec_type=3 board.gs_orig=1,0,0,0,-1,0,0,0,1 board.gs_irq=0x000000b7 board.gs_addr=0x4c board.gs_i2c=0 board.gs_type=1 board.key_val=0x000100a4,0x80000095,0x80000001,0x80000000,0x80000000,0x80000000 board.key_adc=1 board.wifi_pwr=0x000100d5 board.wifi_type=2 console=ttyFIQ0 androidboot.console=ttyFIQ0 init=/init initrd=0x62000000,0x00800000 mtdparts=rk29xxnand:0x00002000@0x00002000(misc),0x0000a000@0x00004000(kernel),0x0000a000@0x0000e000(boot),0x0000c000@0x00018000(recovery),0x00020000@0x00024000(backup),0x00040000@0x00044000(cache),0x00200000@0x00084000(userdata),0x00002000@0x00284000(kpanic),0x00100000@0x00286000(system),0x00040000@0x00386000(databk),-@0x003c6000(user)

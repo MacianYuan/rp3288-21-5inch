@@ -1,0 +1,11 @@
+FIRMWARE_VER:4.2.2
+MACHINE_MODEL:rk30sdk
+MACHINE_ID:007
+MANUFACTURER:RK30SDK
+MAGIC: 0x5041524B
+ATAG: 0x60000800
+MACHINE: 3066
+CHECK_MASK: 0x80
+KERNEL_IMG: 0x60408000
+RECOVER_KEY: 1,3,0,7,0
+CMDLINE:board.pwr_on=0x000001a2 board.lcd_param=1,1,0,50000000,500000000,30,10,800,210,13,10,480,22,154,85,0,0 board.lcd_en=0x000101b3 board.bl_max=255 board.bl_min=100 board.bl_ref=0 board.bl_div=10000 board.bl_mode=1 board.bl_pwmid=0 board.bl_en=0x000003c1 board.tp_ymax=600 board.tp_xmax=1024 board.tp_addr=0x40 board.tp_i2c=2 board.tp_irq=0x000101b0 board.tp_type=1 board.bat_discharge=3495,3570,3630,3700,3740,3790,3825,3865,3920,3980,4050 board.bat_charge=3600,3700,3760,3810,3870,3910,3960,4020,4080,4130,4180 board.low_vol=3600 board.save_cap=1 board.root_chg=1 board.down_res=200 board.up_res=200 board.ref_vol=3300 board.dc_det=0x000101a5 board.gs_orig=1,0,0,0,1,0,0,0,0 board.gs_irq=0x000001b2 board.gs_addr=0x15 board.gs_i2c=1 board.gs_type=3 board.key_val=0x000101a4,0x80000200,0x80000001,0x80000000,0x80000000,0x80000000 board.key_adc=3 console=ttyFIQ0 androidboot.console=ttyFIQ0 init=/init initrd=0x62000000,0x00800000 mtdparts=rk29xxnand:0x00002000@0x00002000(misc),0x00004000@0x00004000(kernel),0x00008000@0x00008000(boot),0x00010000@0x00010000(recovery),0x00020000@0x00020000(backup),0x00040000@0x00040000(cache),0x00200000@0x00080000(userdata),0x00002000@0x00280000(kpanic),0x00100000@0x00282000(system),-@0x00382000(user)
