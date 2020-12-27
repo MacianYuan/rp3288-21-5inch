@@ -132,3 +132,43 @@ enhancement: support hikey960 android-8.1.0_r15
 [Quectel_Android_RIL_Driver_V1.42.08]
 Date:   Tue Jul 3 16:46:26 2018 +0800
 enhancement: support android-8.1 system IP set
+
+[Quectel_Android_RIL_Driver_V2.0.0]
+Date:   Thu Jan 24 16:55:41 2019 +0800
+enhancement:
+1.adapte android 8.0 version
+2.support Android 9.0
+3.clear agps
+4.Supoort EC26 (ASR chip)
+5.add SIM card dropping status
+6.support android8.0/32bit
+7.EC26/EC200 support all RIL request as 9x07 excpet nwscanmodeex
+8.Support IPv6
+9.Support EG25
+10.Support VNDK
+
+[Quectel_Android_RIL_Driver_V2.1.0]
+Date:   Tue Mar 5 20:17:23 2019 +0800
+enhancement:
+1. support "AT$QCRMCALL=1,1"
+
+[Quectel_Android_RIL_Driver_V2.2.0]
+Date:   Thu Apr 18 19:37:26 2019 +0800
+enhancement:
+1. support UC200T&EC200T
+
+[Quectel_Android_RIL_Driver_V2.3.0]
+Date:   Thu May 16 16:59:28 2019 +0800
+bug£º
+1. fix some memory leak error
+
+[Quectel_Android_RIL_Driver_V2.4.0]
+Date:   Thu Jun 6 13:55:52 2019 +0800
+bug£º
+1. fix some memory leak error
+
+[Quectel_Android_RIL_Driver_V2.5.0]
+Date:   Mon Jul 29 13:17:18 2019 +0800
+enhancement:
+1. support EG20&RG500
+2. reconstruct QMI&MBIM code
