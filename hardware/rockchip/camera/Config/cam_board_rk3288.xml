@@ -17,7 +17,7 @@
 					<SensorDovdd name="NC" min="18000000" max="18000000" delay="5000"></SensorDovdd>
 					<SensorMclk mclk="24000000" delay="1000"></SensorMclk>
 					<SensorGpioPwen ioname="RK30_PIN0_PC1" active="1" delay="1000"></SensorGpioPwen>
-					<SensorGpioRst ioname="RK30_PIN2_PB4" active="0" delay="1000"></SensorGpioRst>
+					<SensorGpioRst ioname="NC" active="0" delay="1000"></SensorGpioRst>
 					<SensorGpioPwdn ioname="RK30_PIN2_PB6" active="0" delay="2000"></SensorGpioPwdn>
 					<SensorFacing facing="back"></SensorFacing>
 					<SensorInterface interface="MIPI"></SensorInterface>
@@ -284,7 +284,7 @@
 					<SensorDovdd name="NC" min="18000000" max="18000000" delay="5000"></SensorDovdd>
 					<SensorMclk mclk="24000000" delay="1000"></SensorMclk>
 					<SensorGpioPwen ioname="RK30_PIN0_PC1" active="1" delay="1000"></SensorGpioPwen>
-					<SensorGpioRst ioname="RK30_PIN2_PB5" active="0" delay="1000"></SensorGpioRst>
+					<SensorGpioRst ioname="NC" active="1" delay="1000"></SensorGpioRst>
 					<SensorGpioPwdn ioname="RK30_PIN2_PB7" active="1" delay="2000"></SensorGpioPwdn>
 					<SensorFacing facing="front"></SensorFacing>
 					<SensorInterface interface="CCIR601"></SensorInterface>
@@ -293,7 +293,7 @@
 					<SensorPowerupSequence seq="1234"></SensorPowerupSequence>					
 					<SensorFovParemeter h="60.0" v="60.0"></SensorFovParemeter>
 					<SensorAWB_Frame_Skip fps="15"></SensorAWB_Frame_Skip>					
-					<SensorPhy phyMode="CamSys_Phy_Cif" sensor_d0_to_cif_d ="2" cif_num="0" sensorFmt="CamSys_Fmt_Raw_10b"></SensorPhy>
+					<SensorPhy phyMode="CamSys_Phy_Cif" sensor_d0_to_cif_d ="0" cif_num="0" sensorFmt="CamSys_Fmt_Raw_10b"></SensorPhy>
 				</Sensor>
 				<VCM>
 					<VCMDrvName name="NC"></VCMDrvName>

@@ -1,0 +1,25 @@
+rp-rk3288.o: arch/arm/boot/dts/rp-rk3288.dts \
+ arch/arm/boot/dts/rk3288-act8846.dtsi \
+ scripts/dtc/include-prefixes/dt-bindings/pwm/pwm.h \
+ scripts/dtc/include-prefixes/dt-bindings/input/input.h \
+ scripts/dtc/include-prefixes/dt-bindings/input/linux-event-codes.h \
+ arch/arm/boot/dts/rk3288.dtsi \
+ scripts/dtc/include-prefixes/dt-bindings/gpio/gpio.h \
+ scripts/dtc/include-prefixes/dt-bindings/interrupt-controller/irq.h \
+ scripts/dtc/include-prefixes/dt-bindings/interrupt-controller/arm-gic.h \
+ scripts/dtc/include-prefixes/dt-bindings/pinctrl/rockchip.h \
+ scripts/dtc/include-prefixes/dt-bindings/clock/rk3288-cru.h \
+ scripts/dtc/include-prefixes/dt-bindings/thermal/thermal.h \
+ scripts/dtc/include-prefixes/dt-bindings/power/rk3288-power.h \
+ scripts/dtc/include-prefixes/dt-bindings/soc/rockchip,boot-mode.h \
+ scripts/dtc/include-prefixes/dt-bindings/suspend/rockchip-rk3288.h \
+ scripts/dtc/include-prefixes/dt-bindings/display/drm_mipi_dsi.h \
+ arch/arm/boot/dts/skeleton64.dtsi arch/arm/boot/dts/rk3288-android.dtsi \
+ scripts/dtc/include-prefixes/dt-bindings/soc/rockchip-system-status.h \
+ arch/arm/boot/dts/rk3288-dram-default-timing.dtsi \
+ scripts/dtc/include-prefixes/dt-bindings/clock/rockchip-ddr.h \
+ scripts/dtc/include-prefixes/dt-bindings/memory/rk3288-dram.h \
+ scripts/dtc/include-prefixes/dt-bindings/display/media-bus-format.h \
+ arch/arm/boot/dts/act8846.dtsi arch/arm/boot/dts/es8323.dtsi \
+ arch/arm/boot/dts/rp-lcd-dual-lvds-13.3-1920-1080.dtsi \
+ arch/arm/boot/dts/rpdzkj_config.dtsi

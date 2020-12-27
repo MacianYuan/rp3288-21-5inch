@@ -23,10 +23,10 @@
 //#include "rp-lcd-dual-lcd-lvds-10-1024-600-and-mipi-10-800-1280.dtsi"
 //#include "rp-dual-lcd-lvds-10-1024-and-mipi-10-1920.dtsi"
 
-#include "rp-lcd-dual-lcd-lvds-10-1024-600-and-mipi-10-800-1280.dtsi"
+//#include "rp-lcd-dual-lcd-lvds-10-1024-600-and-mipi-10-800-1280.dtsi"
 
 
-//#include "rp-lcd_dual-lvds-13.3-1920x1080.dtsi"
+#include "rp-lcd-dual-lvds-13.3-1920-1080.dtsi"
 
 / {
 	

@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 
-=======
 #include "rpdzkj_config.dtsi"
->>>>>>> 33ad3e9830... add rp-lcd-dual-lvds-13.3-1920-1080.dtsi
 
 / {
 
@@ -125,13 +122,13 @@
 			22 21 20 19 18 17 16 15 14 13 12 11
 			10 9 8 7 6 5 4 3 2 1 0>;
 */
-		default-brightness-level = <255>;
+		default-brightness-level = <200>;
 	};
         //bill
         rpdzkj_config {
                 compatible = "rp_config";
                 user_version = "rpdzkj";
-                system_rotate = "0";
+                system_rotate = "90";
                 back_camera_rotate = "0";
                 front_camera_rotate = "0";
                 lcd_density = "160";
@@ -178,22 +175,22 @@
         prepare-delay-ms = <100>;
 	enable-delay-ms = <100>;
 	pinctrl-0 = <&lcd_en>;
-        rockchip,data-mapping = "jeida";		//""jeida"//vesa
+        rockchip,data-mapping = "vesa";		//""jeida"//vesa
         rockchip,data-width = <24>;	//<18>
         rockchip,output = "duallvds";
 
         display-timings {
                 native-mode = <&timing0>;
                 timing0: timing0 {
-                        clock-frequency = <140000000>;
+                        clock-frequency = <148000000>;
                         hactive = <1920>;
                         vactive = <1080>;
                         hback-porch = <100>;
                         hfront-porch = <80>;
-                        vback-porch = <20>;
-                        vfront-porch = <20>;
-                        hsync-len = <20>;
-                        vsync-len = <10>;
+                        vback-porch = <8>;
+                        vfront-porch = <33>;
+                        hsync-len = <32>;
+                        vsync-len = <4>;
                         hsync-active = <0>;
                         vsync-active = <0>;
                         de-active = <0>;
