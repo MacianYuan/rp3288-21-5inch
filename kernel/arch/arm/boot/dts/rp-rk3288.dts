@@ -61,6 +61,14 @@
 	rp_gpio{
 		status = "okay";
 		compatible = "rp_gpio";
+		//edit by macian 20201228
+		gpio7a3 {	
+			gpio_num = <&gpio7 3 GPIO_ACTIVE_HIGH>;//设置 gpio7_A3，高电平触发
+			gpio_function = <1>;//代表设置为输入模式
+			gpio_event = <KEY_POWER>;//代表发送 POWER 按键事件
+		        send_mode = <0>;//0 代表设置为某电平触发发送事件， 1 代表电平变化触发事件  
+		}
+
 		gpio5c0 {
 			gpio_num = <&gpio5 16 GPIO_ACTIVE_LOW>;
 			gpio_function = <0>;
@@ -117,7 +125,7 @@
 			label = "volume down";
 			rockchip,adc_value = <170>;
 		};
-
+		/*
 		power-key {
 			gpios = <&gpio0 5 GPIO_ACTIVE_LOW>;
 			linux,code = <116>;
@@ -150,13 +158,8 @@
 			label = "camera";
 			rockchip,adc_value = <450>;
 		};
+		*/
 	};
-
-
-
-
-
-
 
 	spdif-sound {
                 status = "okay";
@@ -225,10 +228,6 @@
                 battery-full-detect-gpio = <&gpio7 13 GPIO_ACTIVE_HIGH>;
          };
 
-	
-
-
-
 	bma223_core: bma223_core@18{
 		status = "okay";
 		compatible = "gs_bma223_core";
@@ -274,7 +273,6 @@
 	rockchip,hw-tshut-temp = <850000>;
 	status = "okay";
 };
-
 
 &uart0 {
 	pinctrl-names = "default";
