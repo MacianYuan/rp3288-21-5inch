@@ -6289,7 +6289,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 // Any activity on the power button stops the accessibility shortcut
                 cancelPendingAccessibilityShortcutAction();
                 result &= ~ACTION_PASS_TO_USER;
-                isWakeKey = true; // wake-up will be handled separately
+                isWakeKey = false; // wake-up will be handled separately
                 if (down) {
                     interceptPowerKeyDown(event, interactive);
                 } else {

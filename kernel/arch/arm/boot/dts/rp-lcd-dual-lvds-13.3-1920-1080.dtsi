@@ -142,7 +142,8 @@
                 usb_camera_only_front = "false";
                 gps_use = "false";
                 gps_serial_port = "/dev/ttyS4";
-                status = "okay";
+		home_apk = "spd29";               
+		status = "okay";
         };
 	
 };

@@ -65,9 +65,9 @@
 		gpio7a3 {	
 			gpio_num = <&gpio7 3 GPIO_ACTIVE_HIGH>;//设置 gpio7_A3，高电平触发
 			gpio_function = <1>;//代表设置为输入模式
-			gpio_event = <KEY_POWER>;//代表发送 POWER 按键事件
+			gpio_event = <KEY_WAKEUP>;//代表发送 POWER 按键事件
 		        send_mode = <0>;//0 代表设置为某电平触发发送事件， 1 代表电平变化触发事件  
-		}
+		};
 
 		gpio5c0 {
 			gpio_num = <&gpio5 16 GPIO_ACTIVE_LOW>;
