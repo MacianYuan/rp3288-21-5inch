@@ -300,6 +300,9 @@
 	status = "okay";
 };
 
+&dmc{
+        status= "disabled";
+};
 
 &pinctrl {
 
@@ -322,9 +325,9 @@
         remote_pwm_id = <1>;
         handle_cpu_id = <2>;
         status = "disabled";
-        //status = "okay";
+       //status = "okay";
 
-    ir_key0{
+	ir_key0{
         rockchip,usercode = <0x9f00>;
         rockchip,key_table =
             <0xa8   KEY_POWER>,
@@ -337,7 +340,7 @@
             <0xfd   KEY_ENTER>,
             <0xbc   KEY_UP>,
             <0xf5   KEY_DOWN>,
-            <0xf9   KEY_LEFT>,
+            <0xf   KEY_LEFT>,
             <0xf1   KEY_RIGHT>;
             //<0x75   KEY_RIGHTALT>,
             //<0x75   KEY_TAB>,
