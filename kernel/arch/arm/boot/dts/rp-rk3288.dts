@@ -327,6 +327,7 @@
         status = "disabled";
        //status = "okay";
 
+
 	ir_key0{
         rockchip,usercode = <0x9f00>;
         rockchip,key_table =
@@ -340,7 +341,7 @@
             <0xfd   KEY_ENTER>,
             <0xbc   KEY_UP>,
             <0xf5   KEY_DOWN>,
-            <0xf   KEY_LEFT>,
+            <0xf9   KEY_LEFT>,
             <0xf1   KEY_RIGHT>;
             //<0x75   KEY_RIGHTALT>,
             //<0x75   KEY_TAB>,
